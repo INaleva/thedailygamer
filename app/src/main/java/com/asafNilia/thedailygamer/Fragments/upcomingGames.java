@@ -71,7 +71,7 @@ public class upcomingGames extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onUpcomingFragmentInteraction(uri);
         }
     }
 
@@ -104,6 +104,6 @@ public class upcomingGames extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onUpcomingFragmentInteraction(Uri uri);
     }
 }

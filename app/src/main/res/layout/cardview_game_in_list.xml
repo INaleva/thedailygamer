@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="150dp"
+    android:id="@+id/parent_layout">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -36,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="gameName"
-                    android:textSize="25" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/gameReleaseDate"
@@ -44,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="gameReleaseDate"
-                    android:textSize="25" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/gameCreator"
@@ -52,15 +53,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="gameCreator"
-                    android:textSize="25" />
+                    android:textSize="25dp" />
 
                 <TextView
-                    android:id="@+id/gameType"
+                    android:id="@+id/gameGenre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="gameType"
-                    android:textSize="25" />
+                    android:text="gameGenre"
+                    android:textSize="25dp" />
             </LinearLayout>
 
         </LinearLayout>
