@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity implements
     private void initRecylerView() {
         RecyclerView view = findViewById(R.id.recyclerViewOfBestGames);
         //RecyclerViewAdapter stuff
+        //TODO: Stopped here
     }
+
     @Override
     public void onItemFragmentInteraction(Uri uri) {
 
