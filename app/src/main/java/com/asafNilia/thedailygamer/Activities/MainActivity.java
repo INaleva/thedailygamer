@@ -32,16 +32,18 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initImages();
-        initRecylerView();
+        //  initImages();
+        //initRecylerView();
     }
+
+
 
     private void initImages() {
         //here we will add urls
     }
 
     private void initRecylerView() {
-        RecyclerView view = findViewById(R.id.recyclerViewOfBestGames);
+        RecyclerView view = findViewById(R.id.recyclerViewOfNewGames);
         //RecyclerViewAdapter stuff
         //TODO: Stopped here
     }

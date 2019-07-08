@@ -4,11 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
+import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -24,6 +30,10 @@ public class newGames extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,14 +70,34 @@ public class newGames extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_games, container, false);
+        View view =  inflater.inflate(R.layout.fragment_new_games, container, false);
 
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewOfNewGames);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        ArrayList<GameItemSmall> listOfGameItems = new ArrayList<>();
+        listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life","1999","Vavle","Shooter"));
+        listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life 2","2004","Vavle","Shooter"));
+        listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life 3","never","Vavle","Shooter"));
+        listOfGameItems.add(new GameItemSmall(R.drawable.home,"portal","2004","Vavle","puzzle"));
+
+
+        mRecyclerView = view.findViewById(R.id.recyclerViewOfNewGames);
+        mLayoutManager = new LinearLayoutManager(view.getContext());
+        mAdapter = new smallItemAdapter(listOfGameItems);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+        return  view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
