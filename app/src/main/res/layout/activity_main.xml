@@ -63,6 +63,13 @@
             android:scaleType="centerInside"
             android:src="@drawable/gamesearch" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Hold the buttons to see something cool" />
+
     </LinearLayout>
 
 </LinearLayout>
