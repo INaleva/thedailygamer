@@ -5,19 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".Activities.MainActivity">
 
-    <fragment
-        android:id="@+id/fragment10"
-        android:name="com.asafNilia.thedailygamer.Fragments.newGames"
+    <FrameLayout
+        android:id="@+id/fragment_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.1" />
+        android:layout_weight="1">
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/textSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:ems="10"
+        android:hint="search for game"
+        android:inputType="textPersonName"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
         android:orientation="horizontal">
 
         <ImageView
@@ -26,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:adjustViewBounds="true"
+            android:onClick="openHome"
             android:scaleType="centerInside"
             android:src="@drawable/home" />
 
@@ -35,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:adjustViewBounds="true"
+            android:onClick="openMenu"
             android:scaleType="centerInside"
             android:src="@drawable/menu"
             tools:src="@drawable/menu" />
@@ -45,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:adjustViewBounds="true"
+            android:onClick="searchClicked"
             android:scaleType="centerInside"
             android:src="@drawable/gamesearch" />
 
