@@ -9,7 +9,8 @@
         android:id="@+id/recyclerViewOfNewGames"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
         android:padding="4dp"
         android:scrollbars="vertical"
-        android:background="@android:color/darker_gray"/>
+        tools:visibility="visible" />
 </FrameLayout>

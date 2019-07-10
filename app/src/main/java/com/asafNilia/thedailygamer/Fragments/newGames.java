@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -79,7 +84,7 @@ public class newGames extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_new_games, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_new_games, container, false);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewOfNewGames);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -89,6 +94,8 @@ public class newGames extends Fragment {
         listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life 2","2004","Vavle","Shooter"));
         listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life 3","never","Vavle","Shooter"));
         listOfGameItems.add(new GameItemSmall(R.drawable.home,"portal","2004","Vavle","puzzle"));
+
+        getHtmlCode("http://www.google.com");
 
 
         mRecyclerView = view.findViewById(R.id.recyclerViewOfNewGames);
@@ -137,5 +144,16 @@ public class newGames extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onNewGamesFragmentInteraction(Uri uri);
+    }
+
+    void getHtmlCode(String url)
+    {
+        Ion.with(getContext()).load(url).asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+
+                Log.d("source",result);
+            }
+        });
     }
 }
