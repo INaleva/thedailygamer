@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -51,10 +53,11 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         GameItemSmall currentItem = mGameItemSmallList.get(i);
 
-        viewHolder.gameImage.setImageBitmap(currentItem.getBitmap());
+        //viewHolder.gameImage.setImageBitmap(currentItem.getBitmap());
         viewHolder.gameCreator.setText(currentItem.getmGameCreator());
         viewHolder.gameReleaseDate.setText(currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
+        Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
     }
 
     @Override
