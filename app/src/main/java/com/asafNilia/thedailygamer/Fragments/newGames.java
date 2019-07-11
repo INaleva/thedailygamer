@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
@@ -19,7 +18,8 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
  * create an instance of this fragment.
  */
 public class newGames extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,6 +44,9 @@ public class newGames extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ArrayList<GameItemSmall> listOfGameItems;
+    boolean firstOpen = true;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,7 +80,23 @@ public class newGames extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        listOfGameItems = new ArrayList<>();
 
+
+
+        Ion.with(getContext()).load(MainActivity.url).asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+
+                mRecyclerView = getView().findViewById(R.id.recyclerViewOfNewGames);
+                mAdapter = new smallItemAdapter(listOfGameItems);
+                mLayoutManager = new LinearLayoutManager(getView().getContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setAdapter(mAdapter);
+                fillArrayWithDataFromSourceCode(result);
+
+            }
+        });
 
     }
 
@@ -84,27 +104,82 @@ public class newGames extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_new_games, container, false);
+        final View view = inflater.inflate(R.layout.fragment_new_games, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewOfNewGames);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        ArrayList<GameItemSmall> listOfGameItems = new ArrayList<>();
-        listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life","1999","Vavle","Shooter"));
-        listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life 2","2004","Vavle","Shooter"));
-        listOfGameItems.add(new GameItemSmall(R.drawable.home,"half life 3","never","Vavle","Shooter"));
-        listOfGameItems.add(new GameItemSmall(R.drawable.home,"portal","2004","Vavle","puzzle"));
-
-        getHtmlCode("http://www.google.com");
-
-
-        mRecyclerView = view.findViewById(R.id.recyclerViewOfNewGames);
-        mLayoutManager = new LinearLayoutManager(view.getContext());
-        mAdapter = new smallItemAdapter(listOfGameItems);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
         return  view;
+    }
+
+    private void fillArrayWithDataFromSourceCode(String sourceCode) {
+
+        ArrayList<String> allImages = new ArrayList<>();
+        ArrayList<String> allNames = new ArrayList<>();
+        ArrayList<String> allReleaseDates = new ArrayList<>();
+        ArrayList<String> allPrices= new ArrayList<>();
+        ArrayList<String> allPages = new ArrayList<>();
+
+
+        /**1 param is image is between    capsule"><img src="    and   "></div>
+        //2 param is game name is between   <span class="title">    and     </span>
+        //3 param is release date is between    col search_released responsive_secondrow">   and   </div>
+        //4 param is price is between       data-price-final=" and      ">
+        **/
+
+        Pattern patternForImages = Pattern.compile("capsule\"><img src=\"(.*?)\"></div>");
+        Pattern patternForNames = Pattern.compile("<span class=\"title\">(.*?)</span>");
+        Pattern patternForReleaseDate = Pattern.compile("col search_released responsive_secondrow\">(.*?)</div>");
+        Pattern pattenForPrice = Pattern.compile("data-price-final=\"(.*?)\">");
+        Pattern pattenPages = Pattern.compile("this (.); return false;\">([0-9]+)</a>");
+
+        /**the last one should give us the amount of pages, there will be more then one patten match, so we need to find the max of them,
+        // so we can later manipulte the url with pages for example https://store.steampowered.com/search/?page=2
+        */
+        Matcher matcherForImages = patternForImages.matcher(sourceCode);
+        Matcher matcherForNames = patternForNames.matcher(sourceCode);
+        Matcher matcherForReleaseDate = patternForReleaseDate.matcher(sourceCode);
+        Matcher matcherForPrice = pattenForPrice.matcher(sourceCode);
+        Matcher matcherForPages = pattenPages.matcher(sourceCode);
+
+        while (matcherForImages.find())
+        {
+            /** At this point we get url like this:
+            https://steamcdn-a.akamaihd.net/steam/apps/730/capsule_sm_120.jpg?t=1554409309
+            its a low quality logo (not the capsule_sm)
+            we can get much better quality by replacing it to:
+            https://steamcdn-a.akamaihd.net/steam/apps/730/header.jpg
+            */
+
+            String tempImage = matcherForImages.group(1);
+            String fixedImage = tempImage.replaceAll("capsule_sm_120.jpg","header.jpg");
+            allImages.add(fixedImage);
+        }
+
+        while (matcherForNames.find())
+        {
+            allNames.add(matcherForNames.group(1)); /** add all names to array */
+        }
+
+        while (matcherForReleaseDate.find())
+        {
+            allReleaseDates.add(matcherForReleaseDate.group(1)); /** add all release dates to array */
+        }
+
+        while (matcherForPrice.find())
+        {
+            allPrices.add(matcherForPrice.group(1)); /**add all prices to array */
+        }
+
+        while (matcherForPages.find())
+        {
+            allPages.add(matcherForPages.group(1)); /** add all pages to array
+          array "allPages" is string array, we need to convert it to int, and get the maximum value. */
+        }
+
+        for(int i=0; i<allImages.size(); i++)
+        {
+            listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i))); /** add items to main list */
+        }
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -146,14 +221,5 @@ public class newGames extends Fragment {
         void onNewGamesFragmentInteraction(Uri uri);
     }
 
-    void getHtmlCode(String url)
-    {
-        Ion.with(getContext()).load(url).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String result) {
 
-                Log.d("source",result);
-            }
-        });
-    }
 }

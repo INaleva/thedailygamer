@@ -31,8 +31,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gameImage = itemView.findViewById(R.id.gamePhoto);
             gameName = itemView.findViewById(R.id.gameName);
             gameReleaseDate = itemView.findViewById(R.id.gameReleaseDate);
-            gameCreator = itemView.findViewById(R.id.gameCreator);
-            gameGenre = itemView.findViewById(R.id.gameGenre);
+            gameCreator = itemView.findViewById(R.id.gamePrice);
         }
     }
 
@@ -52,9 +51,8 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         GameItemSmall currentItem = mGameItemSmallList.get(i);
 
-        viewHolder.gameImage.setImageResource(currentItem.getmImageResource());
+        viewHolder.gameImage.setImageBitmap(currentItem.getBitmap());
         viewHolder.gameCreator.setText(currentItem.getmGameCreator());
-        viewHolder.gameGenre.setText(currentItem.getmGameGenre());
         viewHolder.gameReleaseDate.setText(currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
     }

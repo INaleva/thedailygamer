@@ -2,43 +2,40 @@ package com.asafNilia.thedailygamer.Activities;
 
 import android.animation.ObjectAnimator;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Fragments.gameItem;
 import com.asafNilia.thedailygamer.Fragments.menu;
 import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.Fragments.searching;
-import com.asafNilia.thedailygamer.Fragments.upcomingGames;
 import com.asafNilia.thedailygamer.R;
 
 public class MainActivity extends AppCompatActivity implements
         gameItem.OnFragmentInteractionListener,
         menu.OnFragmentInteractionListener, newGames.OnFragmentInteractionListener,
-        searching.OnFragmentInteractionListener, upcomingGames.OnFragmentInteractionListener
+        searching.OnFragmentInteractionListener
 {
 
     //Data
 
-    String toSearch;
+    String toSearch = "";
     EditText textSearchField;
     ImageView homeButton;
     ImageView menuButton;
     ImageView searchButton;
     boolean searchTextIsVisible = false;
     FragmentTransaction fragmentTransaction;
+    public static String url = "https://store.steampowered.com/search/?term="; //the default link.
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +128,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSearchFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onUpcomingFragmentInteraction(Uri uri) {
 
     }
 
