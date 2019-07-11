@@ -115,6 +115,7 @@ public class newGames extends Fragment {
         ArrayList<String> allNames = new ArrayList<>();
         ArrayList<String> allReleaseDates = new ArrayList<>();
         ArrayList<String> allPrices= new ArrayList<>();
+        ArrayList<String> allExpands = new ArrayList<>();
         ArrayList<String> allPages = new ArrayList<>();
 
 
@@ -122,13 +123,16 @@ public class newGames extends Fragment {
         //2 param is game name is between   <span class="title">    and     </span>
         //3 param is release date is between    col search_released responsive_secondrow">   and   </div>
         //4 param is price is between       data-price-final=" and      ">
-        **/
+        //5 param is the url of the inner store page is between <a href=" and "  data-ds-appid=
+         **/
 
         Pattern patternForImages = Pattern.compile("capsule\"><img src=\"(.*?)\"></div>");
         Pattern patternForNames = Pattern.compile("<span class=\"title\">(.*?)</span>");
         Pattern patternForReleaseDate = Pattern.compile("col search_released responsive_secondrow\">(.*?)</div>");
         Pattern pattenForPrice = Pattern.compile("data-price-final=\"(.*?)\">");
+        Pattern patternForExpand= Pattern.compile("<a href=\"(.*?)\"  data-ds-appid=|<a href=\"(.*?)\"  data-ds-bundleid=");
         Pattern pattenPages = Pattern.compile("this (.); return false;\">([0-9]+)</a>");
+
 
         /**the last one should give us the amount of pages, there will be more then one patten match, so we need to find the max of them,
         // so we can later manipulte the url with pages for example https://store.steampowered.com/search/?page=2
@@ -137,6 +141,7 @@ public class newGames extends Fragment {
         Matcher matcherForNames = patternForNames.matcher(sourceCode);
         Matcher matcherForReleaseDate = patternForReleaseDate.matcher(sourceCode);
         Matcher matcherForPrice = pattenForPrice.matcher(sourceCode);
+        Matcher matcherForExpand = patternForExpand.matcher(sourceCode);
         Matcher matcherForPages = pattenPages.matcher(sourceCode);
 
         while (matcherForImages.find())
@@ -168,6 +173,11 @@ public class newGames extends Fragment {
             allPrices.add(matcherForPrice.group(1)); /**add all prices to array */
         }
 
+        while (matcherForExpand.find())
+        {
+            allExpands.add(matcherForExpand.group(1)); /**add all store pages to array */
+        }
+
         while (matcherForPages.find())
         {
             allPages.add(matcherForPages.group(1)); /** add all pages to array
@@ -176,7 +186,7 @@ public class newGames extends Fragment {
 
         for(int i=0; i<allImages.size(); i++)
         {
-            listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i))); /** add items to main list */
+            listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i),allExpands.get(i))); /** add items to main list */
         }
 
 

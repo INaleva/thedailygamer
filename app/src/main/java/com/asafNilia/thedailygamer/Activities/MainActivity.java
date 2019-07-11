@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements
     ImageView menuButton;
     ImageView searchButton;
     boolean searchTextIsVisible = false;
+    boolean menuOpen = false;
     FragmentTransaction fragmentTransaction;
     public static String url = "https://store.steampowered.com/search/?term="; //the default link.
 
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements
         {
             textSearchField.setVisibility(View.GONE);
             searchTextIsVisible = false;
-            changeFragment(new newGames());
+            //changeFragment(new newGames());
         }
         else
         {
@@ -151,7 +152,14 @@ public class MainActivity extends AppCompatActivity implements
     public void openMenu(View view)
     {
         cancelSearch();
-        changeFragment(new menu());
+        if (!menuOpen) {
+            changeFragment(new menu());
+            menuOpen = true;
+        }
+        else {
+            changeFragment(new newGames());
+            menuOpen = false;
+        }
 
     }
 
@@ -167,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements
         searchTextIsVisible = false;
     }
 
-    void changeFragment(Fragment fragment)
+    public void changeFragment(Fragment fragment)
     {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_frame_layout,fragment);

@@ -4,11 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asafNilia.thedailygamer.Activities.MainActivity;
+import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
+import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +54,7 @@ public class gameItem extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static gameItem newInstance(String param1, String param2) {
+
         gameItem fragment = new gameItem();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -59,6 +70,16 @@ public class gameItem extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        //TODO Here we access the current store url
+        Ion.with(getContext()).load("Some url from current item").asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+                fillArrayWithDataFromSourceCode(result);
+
+            }
+        });
     }
 
     @Override
@@ -105,5 +126,9 @@ public class gameItem extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onItemFragmentInteraction(Uri uri);
+    }
+
+    private void fillArrayWithDataFromSourceCode(String sourceCode) {
+
     }
 }
