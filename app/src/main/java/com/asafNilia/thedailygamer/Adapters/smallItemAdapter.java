@@ -25,7 +25,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         public ImageView gameImage;
         public TextView gameName;
         public TextView gameReleaseDate;
-        public TextView gameCreator;
+        public TextView gamePrice;
         public TextView gameGenre;
 
         public ViewHolder(@NonNull View itemView) {
@@ -33,7 +33,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gameImage = itemView.findViewById(R.id.gamePhoto);
             gameName = itemView.findViewById(R.id.gameName);
             gameReleaseDate = itemView.findViewById(R.id.gameReleaseDate);
-            gameCreator = itemView.findViewById(R.id.gamePrice);
+            gamePrice = itemView.findViewById(R.id.gamePrice);
         }
     }
 
@@ -53,8 +53,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         GameItemSmall currentItem = mGameItemSmallList.get(i);
 
-        //viewHolder.gameImage.setImageBitmap(currentItem.getBitmap());
-        viewHolder.gameCreator.setText(currentItem.getmGameCreator());
+        //viewHolder.gameCreator.setText(currentItem.getmGameCreator());
         viewHolder.gameReleaseDate.setText(currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
         Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
