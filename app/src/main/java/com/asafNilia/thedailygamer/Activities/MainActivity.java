@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
     boolean menuOpen = false;
     FragmentTransaction fragmentTransaction;
     public static String url = "https://store.steampowered.com/search/?term="; //the default link.
+    public static String storeUrl = "";
 
 
     @Override

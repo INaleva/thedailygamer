@@ -1,6 +1,7 @@
 package com.asafNilia.thedailygamer.Adapters;
 
 import android.content.ClipData;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -33,7 +34,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         public TextView gameName;
         public TextView gameReleaseDate;
         public TextView gamePrice;
-        public TextView gameGenre;
+        public String gamePage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,6 +50,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                     ((FragmentActivity)view.getContext()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_frame_layout, new gameItem())
                             .commit();
+                    MainActivity.storeUrl = gamePage;
                 }
             });
         }
@@ -74,6 +76,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         viewHolder.gameReleaseDate.setText(currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
         viewHolder.gamePrice.setText(currentItem.getmGamePrice());
+        viewHolder.gamePage = currentItem.getmGamePage();
         Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
 
     }
