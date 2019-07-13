@@ -2,30 +2,38 @@ package com.asafNilia.thedailygamer.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.service.autofill.FieldClassification;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.asafNilia.thedailygamer.Activities.MainActivity;
-import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
-import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.asafNilia.thedailygamer.Activities.MainActivity.loadLayout;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.mainLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,15 +54,15 @@ public class gameItem extends Fragment {
     //private String mParam2;
     private String mVideoResource;
     private String mGameTitle;
-    private String mGameReleaseDate;
-    private String mGamePrice;
     private String mGameDescription;
 
     private VideoView Video;
+    private ImageView Image;
     private TextView  Title;
-    private TextView  ReleaseDate;
-    private TextView  Price;
     private TextView  Description;
+
+    private ImageButton buyNowButton;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,14 +97,8 @@ public class gameItem extends Fragment {
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        //TODO Here we access the current store url
-        Ion.with(getContext()).load(MainActivity.storeUrl).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String result) {
-                fillArrayWithDataFromSourceCode(result);
 
-            }
-        });
+
     }
 
     @Override
@@ -145,24 +147,66 @@ public class gameItem extends Fragment {
         void onItemFragmentInteraction(Uri uri);
     }
 
-    private void fillArrayWithDataFromSourceCode(String sourceCode) {
-        /**1 param is video resource is between    data-webm-source="    and   "
-         //2 param is game title is between   <title>    and      on Steam</title>
-         //3 param is release date is between    col search_released responsive_secondrow">   and   </div>
-         //4 param is price is between
-         //5 param is description is between       About This Game</h2> and      <div class=
-         **/
 
+    private void fillGameItemData(final String sourceCode) throws IOException {
+
+        Pattern patternForAgeVerified = Pattern.compile("agecheck"); /** check if there ia agecheck in the source code */
+        final Matcher matcherForAgeVerified = patternForAgeVerified.matcher(sourceCode);
+
+                if(matcherForAgeVerified.find())
+                {
+                    Video.setVisibility(View.INVISIBLE);
+                    Image.setVisibility(View.VISIBLE);
+                    getDataForProtectedGame(sourceCode); /** case when game is age protected  */
+                }
+
+                else
+                {
+                    Video.setVisibility(View.VISIBLE);
+                    Image.setVisibility(View.INVISIBLE);
+                    getDataForUnprotectedGame(sourceCode);/** case when game is not age protected  */
+                }
+            }
+
+    private void getDataForProtectedGame(String sourceCode) {
+        Pattern patternForDescription = Pattern.compile("Description\" content=\"(.*?)\">");
+        Pattern patternForTitle = Pattern.compile("<meta property=\"og:title\" content=\"(.*?)\">");
+        Pattern patternForImage = Pattern.compile("image_src\" href=\"(.*?)\">");
+
+        final Matcher matcherForDescription = patternForDescription.matcher(sourceCode);
+        final Matcher matcherForTitle = patternForTitle.matcher(sourceCode);
+        final Matcher matcherForImage = patternForImage.matcher(sourceCode);
+
+                if(matcherForDescription.find())
+                {
+                    mGameDescription = matcherForDescription.group(1);
+                    mGameDescription = Jsoup.parse(mGameDescription).text();
+                    String withNewLines = mGameDescription.replaceAll("\\.","\\.\n\n");
+                    Description.setText(withNewLines);
+                }
+
+                if(matcherForTitle.find())
+                {
+                    mGameTitle = matcherForTitle.group(1);
+                    Title.setText(mGameTitle);
+                }
+
+                if(matcherForImage.find())
+                {
+                    String url = matcherForImage.group(1);
+                    Picasso.get().load(url).into(Image);
+                }
+    }
+
+    private void getDataForUnprotectedGame(String sourceCode) {
         Pattern patternForVideo = Pattern.compile("data-webm-source=\"(.*?)\"");
         Pattern patternForTitle = Pattern.compile("<title>(.*?) on Steam</title>");
-        //Pattern patternForReleaseDate = Pattern.compile("col search_released responsive_secondrow\">(.*?)</div>");
         Pattern patternForDescription = Pattern.compile("(?s)(?<=<h2>)About This Game(?=</h2>)(.+?)<div class=\"");
-
-        //Pattern patternForDescription = Pattern.compile("<meta name=\"Description\" content=\"(.*?)\">");
 
         Matcher matcherForVideos = patternForVideo.matcher(sourceCode);
         Matcher matcherForTitles = patternForTitle.matcher(sourceCode);
         Matcher matcherForDescription = patternForDescription.matcher(sourceCode);
+
 
         if (matcherForVideos.find()) {
             mVideoResource = matcherForVideos.group(1);
@@ -179,20 +223,49 @@ public class gameItem extends Fragment {
         if (matcherForDescription.find()) {
             mGameDescription = matcherForDescription.group(1);
             //fix some html code string issues
-            mGameDescription.replaceAll("<br ?/?>","\n"); //TODO: I wanted to replace every <br /> with a new line maybe you know how?
             mGameDescription = Jsoup.parse(mGameDescription).text();
-            Description.setText(mGameDescription);
+            String withNewLines = mGameDescription.replaceAll("\\.","\\.\n\n");
+            Description.setText(withNewLines);
 
         }
-
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+
         Video = (VideoView) getView().findViewById(R.id.gameVideo);
+        Image = (ImageView) getView().findViewById(R.id.gameImage);
         Title = (TextView) getView().findViewById(R.id.gameTitle);
+        loadLayout = view.findViewById(R.id.loadView);
+        mainLayout = view.findViewById(R.id.mainView);
+        //MainActivity.buyNow = view.findViewById(R.id.buyNow);
+
+
+        MainActivity.buyNow.setVisibility(View.VISIBLE);
+        MainActivity.textSearchField.setVisibility(View.GONE);
+        loadLayout.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.INVISIBLE);
+
+
+        //TODO Here we access the current store url
+        Ion.with(getContext()).load(MainActivity.storeUrl).asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+                try {
+                    fillGameItemData(result); /** fills all needed info according to html source */
+                    loadLayout.setVisibility(View.INVISIBLE); /** make loading invisible */
+                    mainLayout.setVisibility(View.VISIBLE); /** make rest of the fragment visible */
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+
         Description = (TextView) getView().findViewById(R.id.gameDescription);
         Description.setMovementMethod(new ScrollingMovementMethod());
+
+
 
         //comments just for a reminder:
         //private TextView gameReleaseDate;

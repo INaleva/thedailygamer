@@ -111,11 +111,11 @@ public class newGames extends Fragment {
 
     private void fillArrayWithDataFromSourceCode(String sourceCode) {
 
-        ArrayList<String> allImages = new ArrayList<>();
-        ArrayList<String> allNames = new ArrayList<>();
-        ArrayList<String> allReleaseDates = new ArrayList<>();
-        ArrayList<String> allPrices= new ArrayList<>();
-        ArrayList<String> allExpands = new ArrayList<>();
+        final ArrayList<String> allImages = new ArrayList<>();
+        final ArrayList<String> allNames = new ArrayList<>();
+        final ArrayList<String> allReleaseDates = new ArrayList<>();
+        final ArrayList<String> allPrices= new ArrayList<>();
+        final ArrayList<String> allExpands = new ArrayList<>();
         ArrayList<String> allPages = new ArrayList<>();
 
 
@@ -130,7 +130,7 @@ public class newGames extends Fragment {
         Pattern patternForNames = Pattern.compile("<span class=\"title\">(.*?)</span>");
         Pattern patternForReleaseDate = Pattern.compile("col search_released responsive_secondrow\">(.*?)</div>");
         Pattern pattenForPrice = Pattern.compile("data-price-final=\"(.*?)\">");
-        Pattern patternForExpand= Pattern.compile("<a href=\"(.*?)\"  data-ds-appid=|<a href=\"(.*?)\"  data-ds-bundleid=");
+        final Pattern patternForExpand= Pattern.compile("<a href=\"(.*?)\"  data-ds-appid=|<a href=\"(.*?)\"  data-ds-bundleid=");
         Pattern pattenPages = Pattern.compile("this (.); return false;\">([0-9]+)</a>");
 
 
@@ -190,8 +190,8 @@ public class newGames extends Fragment {
         }
 
 
-    }
 
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

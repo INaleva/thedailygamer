@@ -1,8 +1,10 @@
 package com.asafNilia.thedailygamer.Adapters;
 
 import android.content.ClipData;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +53,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                             .replace(R.id.fragment_frame_layout, new gameItem())
                             .commit();
                     MainActivity.storeUrl = gamePage;
+                    MainActivity.buyNow.setVisibility(View.VISIBLE);
                 }
             });
         }

@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.asafNilia.thedailygamer.Fragments.buyNow;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
 import com.asafNilia.thedailygamer.Fragments.menu;
 import com.asafNilia.thedailygamer.Fragments.newGames;
@@ -22,19 +26,23 @@ import com.asafNilia.thedailygamer.R;
 public class MainActivity extends AppCompatActivity implements
         gameItem.OnFragmentInteractionListener,
         menu.OnFragmentInteractionListener, newGames.OnFragmentInteractionListener,
-        searching.OnFragmentInteractionListener
+        searching.OnFragmentInteractionListener, buyNow.OnFragmentInteractionListener
 {
 
     //Data
 
     String toSearch = "";
-    EditText textSearchField;
+    public static EditText textSearchField;
     ImageView homeButton;
     ImageView menuButton;
     ImageView searchButton;
+    public static ImageButton buyNow;
     boolean searchTextIsVisible = false;
     boolean menuOpen = false;
     FragmentTransaction fragmentTransaction;
+    public static FrameLayout mainLayout;
+    public static FrameLayout loadLayout;
+
     public static String url = "https://store.steampowered.com/search/?term="; //the default link.
     public static String storeUrl = "";
 
@@ -48,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements
         homeButton = findViewById(R.id.homeButton);
         menuButton = findViewById(R.id.buttonOpenMenu);
         searchButton = findViewById(R.id.buttonSearchGame);
+        mainLayout = findViewById(R.id.mainView);
+        loadLayout = findViewById(R.id.loadView);
+        buyNow = findViewById(R.id.buyNow);
 
 
 
@@ -110,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements
     private void initRecylerView() {
         RecyclerView view = findViewById(R.id.recyclerViewOfNewGames);
         //RecyclerViewAdapter stuff
-        //TODO: Stopped here
     }
 
     @Override
@@ -153,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements
     public void openMenu(View view)
     {
         cancelSearch();
+        buyNow.setVisibility(View.INVISIBLE);
+
         if (!menuOpen) {
             changeFragment(new menu());
             menuOpen = true;
@@ -168,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements
     {
         cancelSearch();
         changeFragment(new newGames());
+        buyNow.setVisibility(View.INVISIBLE);
     }
 
     void cancelSearch() //removes the search bar
@@ -185,5 +198,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    public void buyNowClicked(View view) {
 
+        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
+        changeFragment(new buyNow());
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

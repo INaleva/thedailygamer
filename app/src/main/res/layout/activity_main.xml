@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
+    android:visibility="visible"
     tools:context=".Activities.MainActivity">
 
     <FrameLayout
         android:id="@+id/fragment_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:visibility="visible" />
 
     <EditText
         android:id="@+id/textSearch"
@@ -28,7 +30,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
+        android:layout_weight="8"
         android:orientation="horizontal">
 
         <ImageView
@@ -62,12 +64,17 @@
             android:scaleType="centerInside"
             android:src="@drawable/gamesearch" />
 
-        <TextView
-            android:id="@+id/textView3"
+        <ImageButton
+            android:id="@+id/buyNow"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0"
-            android:text="Hold the buttons to see something cool" />
+            android:adjustViewBounds="true"
+            android:onClick="buyNowClicked"
+            android:scaleType="centerInside"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/buynow" />
+
 
     </LinearLayout>
 

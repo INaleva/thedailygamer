@@ -9,6 +9,8 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="this is the menu " />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="NOTHING TO SEE HERE. \n GO AWAY"
+        android:textSize="35dp" />
 </LinearLayout>
