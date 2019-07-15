@@ -83,22 +83,20 @@ public class newGames extends Fragment {
         listOfGameItems = new ArrayList<>();
 
 
+            Ion.with(getContext()).load(MainActivity.url).asString().setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String result) {
 
-        Ion.with(getContext()).load(MainActivity.url).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String result) {
+                    mRecyclerView = getView().findViewById(R.id.recyclerViewOfNewGames);
+                    mAdapter = new smallItemAdapter(listOfGameItems);
+                    mLayoutManager = new LinearLayoutManager(getView().getContext());
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setAdapter(mAdapter);
+                    fillArrayWithDataFromSourceCode(result);
+                }
+            });
+        }
 
-                mRecyclerView = getView().findViewById(R.id.recyclerViewOfNewGames);
-                mAdapter = new smallItemAdapter(listOfGameItems);
-                mLayoutManager = new LinearLayoutManager(getView().getContext());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setAdapter(mAdapter);
-                fillArrayWithDataFromSourceCode(result);
-
-            }
-        });
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -214,6 +212,7 @@ public class newGames extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
     }
 
     /**

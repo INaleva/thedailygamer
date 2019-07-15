@@ -1,10 +1,7 @@
 package com.asafNilia.thedailygamer.Adapters;
 
 import android.content.ClipData;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -13,16 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
-import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.ViewHolder> {
     private ArrayList<GameItemSmall> mGameItemSmallList;
@@ -37,6 +34,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         public TextView gameReleaseDate;
         public TextView gamePrice;
         public String gamePage;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,14 +73,35 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         GameItemSmall currentItem = mGameItemSmallList.get(i);
 
-        //viewHolder.gameCreator.setText(currentItem.getmGameCreator());
-        viewHolder.gameReleaseDate.setText(currentItem.getmGameReleaseDate());
+        viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
-        viewHolder.gamePrice.setText(currentItem.getmGamePrice());
+        String fixedPrice = addDotAndCurrencySign(currentItem.getmGamePrice());
+        if(fixedPrice.equals("0.0₪"))
+        {
+            viewHolder.gamePrice.setText("FREE TO PLAY");
+            currentItem.setmGamePrice("FREE TO PLAY");
+
+
+        }
+        else
+        {
+            viewHolder.gamePrice.setText("Price: "+fixedPrice);
+            currentItem.setmGamePrice("Price: "+fixedPrice);
+        }
         viewHolder.gamePage = currentItem.getmGamePage();
         Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
 
     }
+
+    private String addDotAndCurrencySign(String fullPrice) {
+        int number = Integer.parseInt(fullPrice);
+        int first = number / 100;
+        int last = number % 100;
+
+        String fixedPrice = Integer.toString(first) + "." + Integer.toString(last) + "₪";
+        return fixedPrice;
+    }
+    
 
     @Override
     public int getItemCount() {

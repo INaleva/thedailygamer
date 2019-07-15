@@ -23,6 +23,9 @@ import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.Fragments.searching;
 import com.asafNilia.thedailygamer.R;
 
+import java.util.Currency;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements
         gameItem.OnFragmentInteractionListener,
         menu.OnFragmentInteractionListener, newGames.OnFragmentInteractionListener,
@@ -179,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements
     public void openHome(View view)
     {
         cancelSearch();
-        changeFragment(new newGames());
+            changeFragment(new newGames());
         buyNow.setVisibility(View.INVISIBLE);
     }
 

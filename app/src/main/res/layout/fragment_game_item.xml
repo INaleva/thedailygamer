@@ -90,7 +90,7 @@
             <TextView
                 android:id="@+id/gameDescription"
                 android:layout_width="380dp"
-                android:layout_height="189dp"
+                android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:scrollbars="vertical"
                 android:text="description"

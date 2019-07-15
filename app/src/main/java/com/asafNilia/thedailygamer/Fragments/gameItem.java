@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -223,9 +224,13 @@ public class gameItem extends Fragment {
         if (matcherForDescription.find()) {
             mGameDescription = matcherForDescription.group(1);
             //fix some html code string issues
-            mGameDescription = Jsoup.parse(mGameDescription).text();
-            String withNewLines = mGameDescription.replaceAll("\\.","\\.\n\n");
-            Description.setText(withNewLines);
+            //String withNewLines = mGameDescription.replaceAll("<br />|<br>","\n");
+            //mGameDescription = Jsoup.parse(withNewLines).text();
+            //Description.setText(mGameDescription);
+            String withoutImages = mGameDescription.replaceAll("<img src=\"(.*?)>","");
+
+            Description.setText(Html.fromHtml(withoutImages,0), TextView.BufferType.SPANNABLE);
+
 
         }
     }
