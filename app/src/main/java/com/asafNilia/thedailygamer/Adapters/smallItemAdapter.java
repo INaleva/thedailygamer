@@ -76,11 +76,10 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
         String fixedPrice = addDotAndCurrencySign(currentItem.getmGamePrice());
-        if(fixedPrice.equals("0.0₪"))
+            if(fixedPrice.equals("0.0₪"))
         {
             viewHolder.gamePrice.setText("FREE TO PLAY");
             currentItem.setmGamePrice("FREE TO PLAY");
-
 
         }
         else
@@ -94,12 +93,20 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     }
 
     private String addDotAndCurrencySign(String fullPrice) {
-        int number = Integer.parseInt(fullPrice);
-        int first = number / 100;
-        int last = number % 100;
+        try {
+            int number = Integer.parseInt(fullPrice);
+            int first = number / 100;
+            int last = number % 100;
+            String fixedPrice = Integer.toString(first) + "." + Integer.toString(last) + "₪";
+            return fixedPrice;
+        }
+        catch (NumberFormatException e)
+        {
+            return "FREE TO PLAY";
+        }
 
-        String fixedPrice = Integer.toString(first) + "." + Integer.toString(last) + "₪";
-        return fixedPrice;
+
+
     }
     
 

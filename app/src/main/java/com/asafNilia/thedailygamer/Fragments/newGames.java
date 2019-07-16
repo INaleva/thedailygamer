@@ -2,6 +2,7 @@ package com.asafNilia.thedailygamer.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
@@ -17,6 +19,11 @@ import com.asafNilia.thedailygamer.R;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,6 +51,7 @@ public class newGames extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Document doc;
 
     ArrayList<GameItemSmall> listOfGameItems;
     boolean firstOpen = true;
@@ -78,24 +86,31 @@ public class newGames extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
 
-        listOfGameItems = new ArrayList<>();
 
 
             Ion.with(getContext()).load(MainActivity.url).asString().setCallback(new FutureCallback<String>() {
                 @Override
                 public void onCompleted(Exception e, String result) {
+                        listOfGameItems = new ArrayList<>();
+                        listOfGameItems.clear();
 
-                    mRecyclerView = getView().findViewById(R.id.recyclerViewOfNewGames);
-                    mAdapter = new smallItemAdapter(listOfGameItems);
-                    mLayoutManager = new LinearLayoutManager(getView().getContext());
-                    mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.setAdapter(mAdapter);
-                    fillArrayWithDataFromSourceCode(result);
+                        if(getActivity() != null) { //checks if the fragment was not suddenly closed
+                            mRecyclerView = getView().findViewById(R.id.recyclerViewOfNewGames);
+                            mAdapter = new smallItemAdapter(listOfGameItems);
+                            mLayoutManager = new LinearLayoutManager(getView().getContext());
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            mRecyclerView.setAdapter(mAdapter);
+                            fillArrayWithDataFromSourceCode(result);
+                        }
                 }
             });
-        }
+
+
+
+    }
 
 
     @Override
@@ -121,7 +136,7 @@ public class newGames extends Fragment {
         //2 param is game name is between   <span class="title">    and     </span>
         //3 param is release date is between    col search_released responsive_secondrow">   and   </div>
         //4 param is price is between       data-price-final=" and      ">
-        //5 param is the url of the inner store page is between <a href=" and "  data-ds-appid=
+        //5 param is the defaultUrl of the inner store page is between <a href=" and "  data-ds-appid=
          **/
 
         Pattern patternForImages = Pattern.compile("capsule\"><img src=\"(.*?)\"></div>");
@@ -133,7 +148,7 @@ public class newGames extends Fragment {
 
 
         /**the last one should give us the amount of pages, there will be more then one patten match, so we need to find the max of them,
-        // so we can later manipulte the url with pages for example https://store.steampowered.com/search/?page=2
+        // so we can later manipulte the defaultUrl with pages for example https://store.steampowered.com/search/?page=2
         */
         Matcher matcherForImages = patternForImages.matcher(sourceCode);
         Matcher matcherForNames = patternForNames.matcher(sourceCode);
@@ -144,7 +159,7 @@ public class newGames extends Fragment {
 
         while (matcherForImages.find())
         {
-            /** At this point we get url like this:
+            /** At this point we get defaultUrl like this:
             https://steamcdn-a.akamaihd.net/steam/apps/730/capsule_sm_120.jpg?t=1554409309
             its a low quality logo (not the capsule_sm)
             we can get much better quality by replacing it to:
@@ -182,7 +197,7 @@ public class newGames extends Fragment {
           array "allPages" is string array, we need to convert it to int, and get the maximum value. */
         }
 
-        for(int i=0; i<allImages.size(); i++)
+        for(int i=0; i < allNames.size()-1; i++)
         {
             listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i),allExpands.get(i))); /** add items to main list */
         }

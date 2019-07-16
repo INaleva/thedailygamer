@@ -8,6 +8,8 @@ public class GameItemSmall {
     private String mGameName;
     private String mGameReleaseDate;
     private String mGamePrice;
+    private String mRawPrice;
+
     private String mGamePage;
     private Bitmap bitmap;
 
@@ -17,7 +19,15 @@ public class GameItemSmall {
         this.mGameReleaseDate = mGameReleaseDate;
         this.mGamePrice = mGamePrice;
         this.mGamePage = mGamePage;
+        this.mRawPrice = mGamePrice;
+    }
 
+    public String getmRawPrice() {
+        return mRawPrice;
+    }
+
+    public void setmRawPrice(String mRawPrice) {
+        this.mRawPrice = mRawPrice;
     }
 
     public String getImageResource() {

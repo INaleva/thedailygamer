@@ -211,7 +211,7 @@ public class gameItem extends Fragment {
 
         if (matcherForVideos.find()) {
             mVideoResource = matcherForVideos.group(1);
-            //set video url and play it
+            //set video defaultUrl and play it
             Video.setVideoPath(mVideoResource);
             Video.start();
         }
@@ -252,7 +252,7 @@ public class gameItem extends Fragment {
         mainLayout.setVisibility(View.INVISIBLE);
 
 
-        //TODO Here we access the current store url
+        //TODO Here we access the current store defaultUrl
         Ion.with(getContext()).load(MainActivity.storeUrl).asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
