@@ -269,11 +269,5 @@ public class gameItem extends Fragment {
 
         Description = (TextView) getView().findViewById(R.id.gameDescription);
         Description.setMovementMethod(new ScrollingMovementMethod());
-
-
-
-        //comments just for a reminder:
-        //private TextView gameReleaseDate;
-        //private TextView gamePrice;
     }
 }

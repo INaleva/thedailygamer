@@ -49,8 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:adjustViewBounds="true"
+            android:background="@null"
             android:onClick="openMenu"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:src="@drawable/menu"
             tools:src="@drawable/menu" />
 
@@ -61,7 +62,7 @@
             android:layout_weight="0"
             android:adjustViewBounds="true"
             android:onClick="searchClicked"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             android:src="@drawable/gamesearch" />
 
         <ImageButton
