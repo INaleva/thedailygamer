@@ -52,6 +52,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                             .commit();
                     MainActivity.storeUrl = gamePage;
                     MainActivity.buyNow.setVisibility(View.VISIBLE);
+                    MainActivity.pagesLayout.setVisibility(View.GONE);
                 }
             });
         }
@@ -89,6 +90,10 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         }
         viewHolder.gamePage = currentItem.getmGamePage();
         Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
+        MainActivity.pagesLayout.setVisibility(View.VISIBLE);
+        MainActivity.lastPageView.setText(""+MainActivity.lastPage);
+        MainActivity.currentPageView.setText(""+MainActivity.currentPage);
+        MainActivity.nextPageView.setText(""+MainActivity.nextPage);
 
     }
 

@@ -10,13 +10,17 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.asafNilia.thedailygamer.Classes.CustomEditText;
 import com.asafNilia.thedailygamer.Fragments.buyNow;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
 import com.asafNilia.thedailygamer.Fragments.menu;
@@ -35,16 +39,27 @@ public class MainActivity extends AppCompatActivity implements
     ImageView homeButton;
     ImageView menuButton;
     ImageView searchButton;
-    boolean searchTextIsVisible = false; //to make the menu smaller
+    static boolean searchTextIsVisible = false; //to make the menu smaller
     FragmentTransaction fragmentTransaction;
-    public static EditText textSearchField;
+    public static CustomEditText textSearchField;
     public static FrameLayout mainLayout; //hide it when loading game item
     public static FrameLayout loadLayout; //hide it when showing game item.
+    public static LinearLayout pagesLayout;
     public static ImageButton buyNow;       //only visible when inside game item
+    public static TextView currentPageView;
+    public static TextView nextPageView;
+    public static TextView lastPageView;
+    public static TextView firstPageView;
 
+    public static int nextPage;
 
+    public static int lastPage;
     public static String defaultUrl = "https://store.steampowered.com/search/?term="; //the default link.
-    public static String url = "https://store.steampowered.com/search/?term=";          //link used to search and open categories
+    public static String urlSearch = "https://store.steampowered.com/search/?term=";          //link used to search and open categories
+    public static String term = ""; //for search
+    public static String url = "https://store.steampowered.com/search/"; //base url
+    public static String tags = ""; //for category
+    public static int currentPage = 1; //for pages
     public static String storeUrl = ""; //link to the game in steam
 
 
@@ -59,9 +74,42 @@ public class MainActivity extends AppCompatActivity implements
         searchButton = findViewById(R.id.buttonSearchGame);
         mainLayout = findViewById(R.id.mainView);
         loadLayout = findViewById(R.id.loadView);
+        pagesLayout = findViewById(R.id.numberLayout);
         buyNow = findViewById(R.id.buyNow);
+        currentPageView = findViewById(R.id.curPage);
+        nextPageView = findViewById(R.id.nextPage);
+        lastPageView = findViewById(R.id.lastPage);
+        firstPageView = findViewById(R.id.firstPage);
+        currentPage = 1;
+        nextPage = 2;
 
+        firstPageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentPage = 1;
+                nextPage = 2;
+                url = url + "?tags=" +tags + "&page=" + currentPage + "term=" + term;
+                changeFragment(new newGames());
+            }
+        });
 
+        nextPageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentPage++;
+                nextPage++;
+                url = url + "?tags=" +tags + "&page=" + currentPage + "term=" + term;
+                changeFragment(new newGames());
+            }
+        });
+        lastPageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                url = url + "?tags=" +tags + "&page=" + lastPage + "term=" + term;
+                changeFragment(new newGames());
+
+            }
+        });
 
         //on click listener for key 'ENTER', as for now we only print the text that was written.
         textSearchField.setOnKeyListener(new View.OnKeyListener() {
@@ -70,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    url = defaultUrl + textSearchField.getText();
+                    url = urlSearch + textSearchField.getText();
                     changeFragment(new newGames()); /** search games */
                     return true;
                 }
@@ -105,6 +153,20 @@ public class MainActivity extends AppCompatActivity implements
                 ObjectAnimator.ofFloat(v, "rotation", 0, 360).start();
 
                 return true;
+            }
+        });
+
+        textSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    cancelSearch();
+                    return true;
+                }
+
+                return false;
             }
         });
 
@@ -148,7 +210,10 @@ public class MainActivity extends AppCompatActivity implements
         }
 
 
+
     }
+
+
 
     public void openMenu(View view) //open menu with game categories
     {
@@ -160,12 +225,22 @@ public class MainActivity extends AppCompatActivity implements
     public void openHome(View view) //open home page with most popular games
     {
         cancelSearch();
+        term = "";
+        tags = "";
         url = defaultUrl;
+        currentPage = 1;
+        nextPage = 2;
             changeFragment(new newGames());
         buyNow.setVisibility(View.INVISIBLE);
     }
 
-    void cancelSearch() //removes the search bar
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+        cancelSearch();
+    }
+
+    public static void cancelSearch() //removes the search bar
     {
         textSearchField.setVisibility(View.GONE);
         searchTextIsVisible = false;
@@ -198,64 +273,68 @@ public class MainActivity extends AppCompatActivity implements
         switch (category)
         {
             case "actionGames":
-                url = "https://store.steampowered.com/search/?tags=19";
+                tags = "19";
                 break;
             case "adventureGames":
-                url = "https://store.steampowered.com/search/?tags=21";
+                tags = "21";
                 break;
             case "casualGames":
-                url = "https://store.steampowered.com/search/?tags=597";
+                tags = "597";
                 break;
             case "simulatorGames":
-                url = "https://store.steampowered.com/search/?tags=599";
+                tags = "599";
                 break;
             case "strategyGames":
-                url = "https://store.steampowered.com/search/?tags=9";
+                tags = "9";
                 break;
             case "buildingGames":
-                url = "https://store.steampowered.com/search/?tags=1643";
+                tags = "1643";
                 break;
             case "racingGames":
-                url = "https://store.steampowered.com/search/?tags=699";
+                tags = "699";
                 break;
             case "twoDimensionGames":
-                url = "https://store.steampowered.com/search/?tags=3871";
+                tags = "3871";
                 break;
             case "freeToPlayGames":
-                url = "https://store.steampowered.com/search/?tags=113";
+                tags = "113";
                 break;
             case "fantasyGames":
-                url = "https://store.steampowered.com/search/?tags=1684";
+                tags = "1684";
                 break;
             case "funnyGames":
-                url = "https://store.steampowered.com/search/?tags=4136";
+                tags = "4136";
                 break;
             case "rpgGames":
-                url = "https://store.steampowered.com/search/?tags=122";
+                tags = "122";
                 break;
             case "indieGames":
-                url = "https://store.steampowered.com/search/?tags=492";
+                tags = "492";
                 break;
             case "shooterGames":
-                url = "https://store.steampowered.com/search/?tags=1774";
+                tags = "1774";
                 break;
             case "mmorpgGames":
-                url = "https://store.steampowered.com/search/?tags=1754";
+                tags = "1754";
                 break;
             case "openWorldGames":
-                url = "https://store.steampowered.com/search/?tags=1695";
+                tags = "1695";
                 break;
             case "puzzleGames":
-                url = "https://store.steampowered.com/search/?tags=1664";
+                tags = "1664";
                 break;
             case "sportGames":
-                url = "https://store.steampowered.com/search/?tags=701";
+                tags = "701";
                 break;
 
         }
-        Toast.makeText(this, category, Toast.LENGTH_SHORT).show();
+        MainActivity.term = "";
+        MainActivity.currentPage = 1;
+        MainActivity.nextPage = 2;
+        url = url + "?tags=" + tags + "&page=" + currentPage;
+        changeFragment(new menu()); //refresh
+        changeFragment(new newGames()); //the fragment
 
-        changeFragment(new newGames());
 
     }
 

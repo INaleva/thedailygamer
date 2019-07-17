@@ -25,8 +25,12 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.asafNilia.thedailygamer.Activities.MainActivity.currentPage;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.tags;
 
 
 /**
@@ -51,10 +55,8 @@ public class newGames extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Document doc;
 
     ArrayList<GameItemSmall> listOfGameItems;
-    boolean firstOpen = true;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,6 +105,7 @@ public class newGames extends Fragment {
                             mLayoutManager = new LinearLayoutManager(getView().getContext());
                             mRecyclerView.setLayoutManager(mLayoutManager);
                             mRecyclerView.setAdapter(mAdapter);
+
                             fillArrayWithDataFromSourceCode(result);
                         }
                 }
@@ -144,7 +147,7 @@ public class newGames extends Fragment {
         Pattern patternForReleaseDate = Pattern.compile("col search_released responsive_secondrow\">(.*?)</div>");
         Pattern pattenForPrice = Pattern.compile("data-price-final=\"(.*?)\">");
         final Pattern patternForExpand= Pattern.compile("<a href=\"(.*?)\"  data-ds-appid=|<a href=\"(.*?)\"  data-ds-bundleid=");
-        Pattern pattenPages = Pattern.compile("this (.); return false;\">([0-9]+)</a>");
+        Pattern pattenPages = Pattern.compile("return false;\">([0-9]*)</a>");
 
 
         /**the last one should give us the amount of pages, there will be more then one patten match, so we need to find the max of them,
@@ -171,6 +174,13 @@ public class newGames extends Fragment {
             allImages.add(fixedImage);
         }
 
+        while (matcherForPages.find())
+        {
+            allPages.add(matcherForPages.group(1));
+        }
+        MainActivity.lastPage = Integer.parseInt(allPages.get(allPages.size()-1)); //gets last index
+
+
         while (matcherForNames.find())
         {
             allNames.add(matcherForNames.group(1)); /** add all names to array */
@@ -191,11 +201,7 @@ public class newGames extends Fragment {
             allExpands.add(matcherForExpand.group(1)); /**add all store pages to array */
         }
 
-        while (matcherForPages.find())
-        {
-            allPages.add(matcherForPages.group(1)); /** add all pages to array
-          array "allPages" is string array, we need to convert it to int, and get the maximum value. */
-        }
+
 
         for(int i=0; i < allNames.size()-1; i++)
         {
@@ -205,6 +211,8 @@ public class newGames extends Fragment {
 
 
     }
+
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
