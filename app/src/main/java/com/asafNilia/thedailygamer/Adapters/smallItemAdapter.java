@@ -44,7 +44,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gameReleaseDate = itemView.findViewById(R.id.gameReleaseDate);
             gamePrice = itemView.findViewById(R.id.gamePrice);
 
-            if (MainActivity.currentPage == 1)
+            if (MainActivity.currentPage == 1) //set the first page according to the current one
                 MainActivity.firstPageView.setVisibility(View.INVISIBLE);
                 else
                 MainActivity.firstPageView.setVisibility(View.VISIBLE);
