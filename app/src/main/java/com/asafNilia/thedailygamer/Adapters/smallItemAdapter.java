@@ -44,6 +44,11 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gameReleaseDate = itemView.findViewById(R.id.gameReleaseDate);
             gamePrice = itemView.findViewById(R.id.gamePrice);
 
+            if (MainActivity.currentPage == 1)
+                MainActivity.firstPageView.setVisibility(View.INVISIBLE);
+                else
+                MainActivity.firstPageView.setVisibility(View.VISIBLE);
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

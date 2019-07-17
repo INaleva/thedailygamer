@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements
         currentPage = 1;
         nextPage = 2;
 
+        if (currentPage==1)
+            firstPageView.setVisibility(View.INVISIBLE);
+
         firstPageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
