@@ -64,6 +64,15 @@
                     android:text="gamePrice"
                     android:textSize="25dp" />
 
+                <ImageView
+                    android:id="@+id/gameFav"
+                    android:layout_width="77dp"
+                    android:layout_height="59dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:onClick="heartClicked"
+                    card_view:srcCompat="@drawable/img_heart" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Classes.CustomEditText;
+import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.Fragments.buyNow;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
 import com.asafNilia.thedailygamer.Fragments.menu;
@@ -345,4 +346,5 @@ public class MainActivity extends AppCompatActivity implements
         InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
+
 }

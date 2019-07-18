@@ -2,6 +2,7 @@ package com.asafNilia.thedailygamer.Classes;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.view.View;
 
 public class GameItemSmall {
     private String mImageResource;
@@ -85,4 +86,5 @@ public class GameItemSmall {
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
+
 }
