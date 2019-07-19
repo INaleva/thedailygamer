@@ -16,6 +16,20 @@
 
                 <TableRow
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <ImageButton
+                        android:id="@+id/favoriteGames"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="categoryClick"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_heart" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <ImageButton
@@ -35,6 +49,7 @@
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
                         android:src="@drawable/img_adventure" />
+
                 </TableRow>
 
                 <TableRow

@@ -24,6 +24,7 @@ import java.util.Locale;
 public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.ViewHolder> {
     private ArrayList<GameItemSmall> mGameItemSmallList;
     private static FragmentTransaction fragmentTransaction;
+    private GameItemSmall currentItem;
 
     public static class ViewHolder extends  RecyclerView.ViewHolder {
 
@@ -52,6 +53,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                 else
                 MainActivity.firstPageView.setVisibility(View.VISIBLE);
 
+            gameFavorite.setImageResource(R.drawable.img_heart_black);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,18 +69,20 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gameFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { //like or unlike a game
-                    //if liked add to the favorites array
-                    if(isFavorite)
+                    if(isFavorite)//if liked add to the favorites array
                     {
                         isFavorite = false;
                         gameFavorite.setImageResource(R.drawable.img_heart_black);
-                        //array add
+                        getAdapterPosition();
+                        //if (currentItem!=null)//TODO
+                        //MainActivity.listOfFavorites.remove(currentItem);//remove from favorites array
                     }
                     else //if not liked, remove from the array
                     {
                         isFavorite = true;
                         gameFavorite.setImageResource(R.drawable.img_heart);
-                        //array remove
+                        //if (currentItem!=null) //TODO
+                        //MainActivity.listOfFavorites.add(currentItem);//add to the favorites array
                     }
                 }
             });
@@ -99,10 +103,11 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        GameItemSmall currentItem = mGameItemSmallList.get(i);
+        currentItem = mGameItemSmallList.get(i);
 
         viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
+        //viewHolder.isFavorite = currentItem.getmIsFavorite();
 
         String fixedPrice = addDotAndCurrencySign(currentItem.getmGamePrice());
             if(fixedPrice.equals("0.0₪"))

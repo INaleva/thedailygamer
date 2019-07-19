@@ -30,6 +30,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.asafNilia.thedailygamer.Activities.MainActivity.currentPage;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.tags;
 
 
@@ -106,7 +107,10 @@ public class newGames extends Fragment {
                             mRecyclerView.setLayoutManager(mLayoutManager);
                             mRecyclerView.setAdapter(mAdapter);
 
-                            fillArrayWithDataFromSourceCode(result);
+                            if (tags.equals("1"))
+                                fillArrayWithDataFromLocal();
+                            else
+                                fillArrayWithDataFromSourceCode(result);
                         }
                 }
             });
@@ -206,10 +210,16 @@ public class newGames extends Fragment {
         for(int i=0; i < allNames.size()-1; i++)
         {
             if(allNames.get(i) != null && allImages.get(i) != null && allPrices.get(i) != null && allReleaseDates.get(i) != null)
-            listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i),allExpands.get(i))); /** add items to main list */
+            listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i),allExpands.get(i),false)); /** add items to main list */
         }
 
 
+    }
+
+    private void fillArrayWithDataFromLocal() {
+        if (listOfFavorites!=null)
+        for (int i=0;i<MainActivity.listOfFavorites.size();i++) /**loop through the whole favorites list*/
+            listOfGameItems.add(listOfFavorites.get(i)); /** add current item to the main list*/
     }
 
 

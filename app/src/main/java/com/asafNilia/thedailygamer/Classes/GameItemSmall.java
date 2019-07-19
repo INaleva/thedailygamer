@@ -10,17 +10,19 @@ public class GameItemSmall {
     private String mGameReleaseDate;
     private String mGamePrice;
     private String mRawPrice;
+    private Boolean mIsFavorite;
 
     private String mGamePage;
     private Bitmap bitmap;
 
-    public GameItemSmall(final String mImageResource, String mGameName, String mGameReleaseDate, String mGamePrice, String mGamePage) {
+    public GameItemSmall(final String mImageResource, String mGameName, String mGameReleaseDate, String mGamePrice, String mGamePage, Boolean mIsFavorite) {
         this.mImageResource = mImageResource;
         this.mGameName = mGameName;
         this.mGameReleaseDate = mGameReleaseDate;
         this.mGamePrice = mGamePrice;
         this.mGamePage = mGamePage;
         this.mRawPrice = mGamePrice;
+        this.mIsFavorite = mIsFavorite;
     }
 
     public String getmRawPrice() {
@@ -87,4 +89,11 @@ public class GameItemSmall {
         this.bitmap = bitmap;
     }
 
+    public Boolean getmIsFavorite() {
+        return mIsFavorite;
+    }
+
+    public void setmIsFavorite(Boolean mIsFavorite) {
+        this.mIsFavorite = mIsFavorite;
+    }
 }
