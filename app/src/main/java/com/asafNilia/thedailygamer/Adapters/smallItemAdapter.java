@@ -35,7 +35,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     private ArrayList<GameItemSmall> mGameItemSmallList;
     private GameItemSmall currentItem;
 
-    public static class ViewHolder extends  RecyclerView.ViewHolder {
+    public class ViewHolder extends  RecyclerView.ViewHolder {
 
         public View view; /**these two variables are for the video playing*/
         public ImageView gameImage; /**some data variables */
@@ -79,19 +79,19 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                     int i = getAdapterPosition();
                     Toast.makeText(view.getContext(), ""+i, Toast.LENGTH_SHORT).show();
 
-                    if(isFavorite)//already liked, need to remove from liked.
+                    if(isFavorite) //already liked, need to remove from liked.
                     {
                         isFavorite = false;
                         gameFavorite.setImageResource(R.drawable.img_heart_black);
-                        //need to check if we are in the same list, list (thats shows all games) or we are in the favorites list, to know how to delete
+                        listOfGameItems.get(i).setmIsFavorite(false);
+
+                        //need to check if we are in the same list, list (that shows all games) or we are in the favorites list, to know how to delete
                         listOfFavorites.remove(listOfGameItems.get(i)); //was remove(i)
-                        
-                        if (tags.equals("1")) { //refresh the page if we are inside the favorites category
-                            Fragment newFragment = new newGames();
-                            ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_frame_layout, newFragment)
-                                    .commit();
-                        }
+                        itemView.setVisibility(View.GONE); //thought this was gonna work lol
+
+                        //remove from recycler view
+                        notifyItemRemoved(getAdapterPosition());
+                        notifyItemRangeChanged(getAdapterPosition(),mGameItemSmallList.size());
                     }
                     else //is not liked, need to add to like
                     {
