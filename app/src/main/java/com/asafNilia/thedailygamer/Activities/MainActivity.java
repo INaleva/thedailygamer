@@ -114,7 +114,11 @@ public class MainActivity extends AppCompatActivity implements
                 currentPage++;
                 nextPage++;
                 if(term!=null) {
+                    if(!tags.equals(""))
                     url = url + "&tags=" + tags + "&page=" + currentPage; //case when we are in search
+                    else
+                        url = url + "?page=" + currentPage; //case when we are in search
+
                 }
                 changeFragment(new newGames());
             }
@@ -122,7 +126,10 @@ public class MainActivity extends AppCompatActivity implements
         lastPageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!tags.equals(""))
                 url = url + "?tags=" +tags + "&page=" + lastPage + "term=" + term;
+                else
+                    url = url + "&page=" + lastPage + "term=" + term;
                 changeFragment(new newGames());
 
             }
@@ -246,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements
         isInFavorite = false;
         term = "";
         tags = "";
-        url = defaultUrl;
+        url = defaultUrl; //was = defaulturl
         currentPage = 1;
         nextPage = 2;
             changeFragment(new newGames());
