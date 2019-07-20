@@ -23,13 +23,13 @@
         android:layout_weight="0"
         android:ems="10"
         android:hint="search for game"
-        android:inputType="textPersonName"
         android:visibility="gone"
-        tools:visibility="gone" />
+        android:singleLine="true"
+        android:imeOptions="actionSearch"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="8"
         android:orientation="horizontal">
 
@@ -65,70 +65,6 @@
             android:scaleType="fitXY"
             android:src="@drawable/gamesearch" />
 
-        <LinearLayout
-            android:id="@+id/numberLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:orientation="horizontal"
-            android:visibility="invisible">
-
-            <TextView
-                android:id="@+id/firstPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingLeft="15sp"
-                android:text="1"
-                android:textColor="#000000"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/curPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:paddingLeft="15sp"
-                android:text="1"
-                android:textColor="#000000"
-                android:textSize="24sp"
-
-                />
-
-            <TextView
-                android:id="@+id/nextPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="2"
-                android:textColor="#000000"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/dots"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="..."
-                android:textColor="#000000"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/lastPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="lst"
-                android:textColor="#000000"
-                android:textSize="24sp" />
-        </LinearLayout>
-
         <ImageButton
             android:id="@+id/buyNow"
             android:layout_width="wrap_content"
@@ -137,8 +73,53 @@
             android:adjustViewBounds="true"
             android:onClick="buyNowClicked"
             android:scaleType="centerInside"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:srcCompat="@drawable/buynow" />
+
+        <LinearLayout
+            android:id="@+id/numberLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:visibility="gone">
+
+            <Button
+                android:id="@+id/firstPage"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/square"
+                android:text="1"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/curPage"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/square"
+                android:text="2"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/nextPage"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/square"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/lastPage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/square"
+                android:text="4" />
+        </LinearLayout>
 
 
     </LinearLayout>

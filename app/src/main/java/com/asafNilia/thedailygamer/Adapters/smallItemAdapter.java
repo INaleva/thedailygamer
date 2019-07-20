@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
@@ -77,7 +76,6 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                 @Override
                 public void onClick(View v) { //like or unlike a game
                     int i = getAdapterPosition();
-                    Toast.makeText(view.getContext(), ""+i, Toast.LENGTH_SHORT).show();
 
                     if(isFavorite) //already liked, need to remove from liked.
                     {

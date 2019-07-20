@@ -1,6 +1,7 @@
 package com.asafNilia.thedailygamer.Activities;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -48,15 +50,15 @@ public class MainActivity extends AppCompatActivity implements
     ImageView searchButton;
     static boolean searchTextIsVisible = false; //to make the menu smaller
     public static boolean isInFavorite = false;
-    public static CustomEditText textSearchField;
+    public static EditText textSearchField;
     public static FrameLayout mainLayout; //hide it when loading game item
     public static FrameLayout loadLayout; //hide it when showing game item.
     public static LinearLayout pagesLayout;
     public static ImageButton buyNow;       //only visible when inside game item
-    public static TextView currentPageView;
-    public static TextView nextPageView;
-    public static TextView lastPageView;
-    public static TextView firstPageView;
+    public static Button currentPageView;
+    public static Button nextPageView;
+    public static Button lastPageView;
+    public static Button firstPageView;
 
     public static int nextPage;
 
@@ -111,7 +113,9 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 currentPage++;
                 nextPage++;
-                url = url + "?tags=" +tags + "&page=" + currentPage + "term=" + term;
+                if(term!=null) {
+                    url = url + "&tags=" + tags + "&page=" + currentPage; //case when we are in search
+                }
                 changeFragment(new newGames());
             }
         });
@@ -126,19 +130,29 @@ public class MainActivity extends AppCompatActivity implements
 
         //on click listener for key 'ENTER', as for now we only print the text that was written.
         textSearchField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
-                    url = urlSearch + textSearchField.getText();
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
                     isInFavorite = false;
+                    url = "https://store.steampowered.com/search/";
+                    url = urlSearch + textSearchField.getText();
+                    hideSoftKeyboard(MainActivity.this);
+                    textSearchField.setVisibility(View.GONE);
                     changeFragment(new newGames()); /** search games */
                     return true;
+                        default:
+                            break;
+                    }
                 }
                 return false;
+
             }
-        });        //apply newGames fragment to the fragment on start.
+        });
 
         homeButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -170,22 +184,11 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        textSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId,
-                                          KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    cancelSearch();
-                    return true;
-                }
-
-                return false;
-            }
-        });
 
         changeFragment(new newGames());
     }
+
+
 
     @Override
     public void onItemFragmentInteraction(Uri uri) {
@@ -224,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements
         }
 
 
-
     }
 
 
@@ -233,13 +235,14 @@ public class MainActivity extends AppCompatActivity implements
     {
         cancelSearch();
         isInFavorite = false;
-        buyNow.setVisibility(View.INVISIBLE);
+        buyNow.setVisibility(View.GONE);
         changeFragment(new menu());
     }
 
     public void openHome(View view) //open home page with most popular games
     {
         cancelSearch();
+        buyNow.setVisibility(View.GONE);
         isInFavorite = false;
         term = "";
         tags = "";
@@ -247,12 +250,10 @@ public class MainActivity extends AppCompatActivity implements
         currentPage = 1;
         nextPage = 2;
             changeFragment(new newGames());
-        buyNow.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onBackPressed() {
-       // super.onBackPressed();
         cancelSearch();
     }
 
@@ -273,7 +274,6 @@ public class MainActivity extends AppCompatActivity implements
 
     public void buyNowClicked(View view) { //opens the buyNow fragment, it has a webview that opens steam game page
 
-        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
         changeFragment(new buyNow());
 
     }
@@ -361,6 +361,14 @@ public class MainActivity extends AppCompatActivity implements
     public void showKeyboard(){
         InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 
 
