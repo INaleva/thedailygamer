@@ -34,6 +34,12 @@ import com.asafNilia.thedailygamer.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -44,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements
 {
 
     //Data
-
     ImageView homeButton;
     ImageView menuButton;
     ImageView searchButton;
@@ -72,12 +77,24 @@ public class MainActivity extends AppCompatActivity implements
     public static String storeUrl = ""; //link to the game in steam
     public static ArrayList<GameItemSmall> listOfFavorites;
     public static ArrayList<GameItemSmall> listOfGameItems;
-
+    public static FileOutputStream fos;
+    public MainActivity() throws FileNotFoundException {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //try to load favorites array
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("favorites",null);
+        Type type = new TypeToken<ArrayList<GameItemSmall>>() {}.getType();
+        listOfFavorites = gson.fromJson(json,type);
+        if (listOfFavorites==null) { //if loaded nothing
+            listOfFavorites = new ArrayList<>(); //init favorites array to empty
+        }
 
         textSearchField = findViewById(R.id.textSearch);
         homeButton = findViewById(R.id.homeButton);
@@ -93,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements
         firstPageView = findViewById(R.id.firstPage);
         currentPage = 1;
         nextPage = 2;
-        listOfFavorites = new ArrayList<>(); //init favorites array to empty
 
         if (currentPage==1)
             firstPageView.setVisibility(View.INVISIBLE);
@@ -366,7 +382,6 @@ public class MainActivity extends AppCompatActivity implements
             url = url + "?tags=" + tags + "&page=" + currentPage;
         changeFragment(new menu()); //refresh
         changeFragment(new newGames()); //the fragment
-
 
     }
 

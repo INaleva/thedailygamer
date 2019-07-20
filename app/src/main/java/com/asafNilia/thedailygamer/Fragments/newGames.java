@@ -188,6 +188,7 @@ public class newGames extends Fragment {
             allPages.add(matcherForPages.group(1));
         }
 
+        if (lastPage>0)
         MainActivity.lastPage = Integer.parseInt(allPages.get(allPages.size()-1)); //gets last index
 
 

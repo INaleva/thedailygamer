@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.view.View;
 
-public class GameItemSmall {
+import java.io.Serializable;
+
+public class GameItemSmall implements Serializable {
     private String mImageResource;
     private String mGameName;
     private String mGameReleaseDate;
