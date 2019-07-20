@@ -363,31 +363,6 @@ public class MainActivity extends AppCompatActivity implements
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public void saveData()
-    {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(listOfFavorites);
-        editor.putString("favorite list",json);
-        editor.apply();
-    }
 
-    public void loadData()
-    {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences",MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("favorite list",null);
-        Type type = new TypeToken<ArrayList<GameItemSmall>>() {}.getType();
-        listOfFavorites = gson.fromJson(json,type);
-
-        if(listOfFavorites == null)
-        {
-            listOfFavorites = new ArrayList<>();
-        }
-
-
-
-    }
 
 }

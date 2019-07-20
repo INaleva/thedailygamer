@@ -1,6 +1,7 @@
 package com.asafNilia.thedailygamer.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Adapters.smallItemAdapter;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -24,11 +27,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.currentPage;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfGameItems;
@@ -222,6 +227,8 @@ public class newGames extends Fragment {
                 listOfGameItems.add(listOfFavorites.get(i));
             }
     }
+
+
 
 
     // TODO: Rename method, update argument and hook method into UI event

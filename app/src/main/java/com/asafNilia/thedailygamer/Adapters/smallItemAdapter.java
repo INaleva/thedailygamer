@@ -89,9 +89,11 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                         listOfFavorites.remove(listOfGameItems.get(i)); //was remove(i)
                         itemView.setVisibility(View.GONE); //thought this was gonna work lol
 
+
                         //remove from recycler view
                         notifyItemRemoved(getAdapterPosition());
                         notifyItemRangeChanged(getAdapterPosition(),mGameItemSmallList.size());
+                        notifyDataSetChanged();
                     }
                     else //is not liked, need to add to like
                     {
@@ -160,7 +162,6 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         MainActivity.lastPageView.setText(""+MainActivity.lastPage);
         MainActivity.currentPageView.setText(""+MainActivity.currentPage);
         MainActivity.nextPageView.setText(""+MainActivity.nextPage);
-
     }
 
     private String addDotAndCurrencySign(String fullPrice) {
@@ -188,3 +189,4 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
 
 
 }
+
