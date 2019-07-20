@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
+import com.asafNilia.thedailygamer.Fragments.menu;
+import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.R;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +44,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         public String gamePage;
         public Boolean isFavorite = false;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             //assign actual items to the fragment's pieces
             view = itemView;
@@ -56,7 +58,6 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                 MainActivity.firstPageView.setVisibility(View.INVISIBLE);
                 else
                 MainActivity.firstPageView.setVisibility(View.VISIBLE);
-                gameFavorite.setImageResource(R.drawable.img_heart_black);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,8 +81,8 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                     {
                         isFavorite = false;
                         gameFavorite.setImageResource(R.drawable.img_heart_black);
-                        //TODO DOESNT WORK
                         //need to check if we are in the same list, list (thats shows all games) or we are in the favorites list, to know how to delete
+                        listOfFavorites.remove(i);
                     }
                     else //is not liked, need to add to like
                     {
@@ -93,6 +94,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                 }
             });
         }
+
     }
 
     public smallItemAdapter(ArrayList<GameItemSmall> smallList){
@@ -115,7 +117,14 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
 
-
+        for(int j = 0; j < listOfFavorites.size(); j++)
+        {
+            if(listOfFavorites.get(j).getmGameName().equals(currentItem.getmGameName()))
+            {
+                viewHolder.isFavorite = true;
+                currentItem.setmIsFavorite(true);
+            }
+        }
 
         if(currentItem.getmIsFavorite())
         {
@@ -130,13 +139,11 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             if(fixedPrice.equals("0.0₪"))
         {
             viewHolder.gamePrice.setText("FREE TO PLAY");
-            currentItem.setmGamePrice("FREE TO PLAY");
 
         }
         else
         {
             viewHolder.gamePrice.setText("Price: "+fixedPrice);
-            currentItem.setmGamePrice("Price: "+fixedPrice);
         }
         viewHolder.gamePage = currentItem.getmGamePage();
         Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
