@@ -21,12 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Classes.CustomEditText;
+import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.Fragments.buyNow;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
 import com.asafNilia.thedailygamer.Fragments.menu;
 import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.Fragments.searching;
 import com.asafNilia.thedailygamer.R;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
         gameItem.OnFragmentInteractionListener,
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements
     public static String tags = ""; //for category
     public static int currentPage = 1; //for pages
     public static String storeUrl = ""; //link to the game in steam
-
+    public static ArrayList<GameItemSmall> listOfFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements
         firstPageView = findViewById(R.id.firstPage);
         currentPage = 1;
         nextPage = 2;
+        listOfFavorites = new ArrayList<>(); //init favorites array to empty
+
+        if (currentPage==1)
+            firstPageView.setVisibility(View.INVISIBLE);
 
         firstPageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,12 +333,16 @@ public class MainActivity extends AppCompatActivity implements
             case "sportGames":
                 tags = "701";
                 break;
-
+            case "favoriteGames":
+                tags = "1";
+                break;
         }
         MainActivity.term = "";
         MainActivity.currentPage = 1;
         MainActivity.nextPage = 2;
-        url = url + "?tags=" + tags + "&page=" + currentPage;
+        url = "https://store.steampowered.com/search/"; //reset url to the basic one
+        if (!tags.equals("1")) //change url only if its not favorites category
+            url = url + "?tags=" + tags + "&page=" + currentPage;
         changeFragment(new menu()); //refresh
         changeFragment(new newGames()); //the fragment
 
@@ -342,4 +353,5 @@ public class MainActivity extends AppCompatActivity implements
         InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
+
 }

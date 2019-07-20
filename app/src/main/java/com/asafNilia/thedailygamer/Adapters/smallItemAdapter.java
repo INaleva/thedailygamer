@@ -24,26 +24,36 @@ import java.util.Locale;
 public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.ViewHolder> {
     private ArrayList<GameItemSmall> mGameItemSmallList;
     private static FragmentTransaction fragmentTransaction;
+    private GameItemSmall currentItem;
 
     public static class ViewHolder extends  RecyclerView.ViewHolder {
 
         public View view; /**these two variables are for the video playing*/
         public ClipData.Item item;
         public ImageView gameImage; /**some data variables */
+        public ImageView gameFavorite;
         public TextView gameName;
         public TextView gameReleaseDate;
         public TextView gamePrice;
         public String gamePage;
-
+        public Boolean isFavorite = false;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            //assign actual items to the fragment's pieces
             view = itemView;
             gameImage = itemView.findViewById(R.id.gamePhoto);
             gameName = itemView.findViewById(R.id.gameName);
             gameReleaseDate = itemView.findViewById(R.id.gameReleaseDate);
             gamePrice = itemView.findViewById(R.id.gamePrice);
+            gameFavorite = itemView.findViewById(R.id.gameFav);
 
+            if (MainActivity.currentPage == 1) //set the first page according to the current one
+                MainActivity.firstPageView.setVisibility(View.INVISIBLE);
+                else
+                MainActivity.firstPageView.setVisibility(View.VISIBLE);
+
+            gameFavorite.setImageResource(R.drawable.img_heart_black);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -53,6 +63,27 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                     MainActivity.storeUrl = gamePage;
                     MainActivity.buyNow.setVisibility(View.VISIBLE);
                     MainActivity.pagesLayout.setVisibility(View.GONE);
+                }
+            });
+
+            gameFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { //like or unlike a game
+                    if(isFavorite)//if liked add to the favorites array
+                    {
+                        isFavorite = false;
+                        gameFavorite.setImageResource(R.drawable.img_heart_black);
+                        getAdapterPosition();
+                        //if (currentItem!=null)//TODO
+                        //MainActivity.listOfFavorites.remove(currentItem);//remove from favorites array
+                    }
+                    else //if not liked, remove from the array
+                    {
+                        isFavorite = true;
+                        gameFavorite.setImageResource(R.drawable.img_heart);
+                        //if (currentItem!=null) //TODO
+                        //MainActivity.listOfFavorites.add(currentItem);//add to the favorites array
+                    }
                 }
             });
         }
@@ -72,10 +103,12 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        GameItemSmall currentItem = mGameItemSmallList.get(i);
+        currentItem = mGameItemSmallList.get(i);
 
         viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
+        //viewHolder.isFavorite = currentItem.getmIsFavorite();
+
         String fixedPrice = addDotAndCurrencySign(currentItem.getmGamePrice());
             if(fixedPrice.equals("0.0₪"))
         {
