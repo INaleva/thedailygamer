@@ -86,13 +86,11 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                         listOfGameItems.get(i).setmIsFavorite(false);
 
                         //need to check if we are in the same list, list (that shows all games) or we are in the favorites list, to know how to delete
-                        listOfFavorites.remove(listOfGameItems.get(i)); //was remove(i)
-                        itemView.setVisibility(View.GONE); //thought this was gonna work lol
-
-
+                        listOfFavorites.remove(listOfGameItems.get(i)); //remove from favorites
+                        listOfGameItems.remove(listOfGameItems.get(i)); //remove from current list
                         //remove from recycler view
                         notifyItemRemoved(getAdapterPosition());
-                        notifyItemRangeChanged(getAdapterPosition(),mGameItemSmallList.size());
+                        notifyItemRangeChanged(getAdapterPosition(),listOfGameItems.size());
                         notifyDataSetChanged();
                     }
                     else //is not liked, need to add to like
