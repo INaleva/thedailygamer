@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import static com.asafNilia.thedailygamer.Activities.MainActivity.currentPage;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfGameItems;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.tags;
 
 
@@ -56,8 +57,6 @@ public class newGames extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    ArrayList<GameItemSmall> listOfGameItems;
 
     private OnFragmentInteractionListener mListener;
 
@@ -109,6 +108,7 @@ public class newGames extends Fragment {
 
                             if (tags.equals("1"))
                                 fillArrayWithDataFromLocal();
+
                             else
                                 fillArrayWithDataFromSourceCode(result);
                         }
@@ -217,9 +217,10 @@ public class newGames extends Fragment {
     }
 
     private void fillArrayWithDataFromLocal() {
-        if (listOfFavorites!=null)
-        for (int i=0;i<MainActivity.listOfFavorites.size();i++) /**loop through the whole favorites list*/
-            listOfGameItems.add(listOfFavorites.get(i)); /** add current item to the main list*/
+        if (listOfFavorites != null)
+            for (int i = 0; i < MainActivity.listOfFavorites.size(); i++) {/**loop through the whole favorites list*/
+                listOfGameItems.add(listOfFavorites.get(i));
+            }
     }
 
 

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
     ImageView menuButton;
     ImageView searchButton;
     static boolean searchTextIsVisible = false; //to make the menu smaller
-    FragmentTransaction fragmentTransaction;
+    public static boolean isInFavorite = false;
     public static CustomEditText textSearchField;
     public static FrameLayout mainLayout; //hide it when loading game item
     public static FrameLayout loadLayout; //hide it when showing game item.
@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements
     public static int currentPage = 1; //for pages
     public static String storeUrl = ""; //link to the game in steam
     public static ArrayList<GameItemSmall> listOfFavorites;
+    public static ArrayList<GameItemSmall> listOfGameItems;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
                     url = urlSearch + textSearchField.getText();
+                    isInFavorite = false;
                     changeFragment(new newGames()); /** search games */
                     return true;
                 }
@@ -225,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements
     public void openMenu(View view) //open menu with game categories
     {
         cancelSearch();
+        isInFavorite = false;
         buyNow.setVisibility(View.INVISIBLE);
         changeFragment(new menu());
     }
@@ -232,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements
     public void openHome(View view) //open home page with most popular games
     {
         cancelSearch();
+        isInFavorite = false;
         term = "";
         tags = "";
         url = defaultUrl;

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
@@ -20,16 +21,19 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.regex.Pattern;
+
+import static com.asafNilia.thedailygamer.Activities.MainActivity.isInFavorite;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfGameItems;
 
 public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.ViewHolder> {
     private ArrayList<GameItemSmall> mGameItemSmallList;
-    private static FragmentTransaction fragmentTransaction;
     private GameItemSmall currentItem;
 
     public static class ViewHolder extends  RecyclerView.ViewHolder {
 
         public View view; /**these two variables are for the video playing*/
-        public ClipData.Item item;
         public ImageView gameImage; /**some data variables */
         public ImageView gameFavorite;
         public TextView gameName;
@@ -52,8 +56,8 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                 MainActivity.firstPageView.setVisibility(View.INVISIBLE);
                 else
                 MainActivity.firstPageView.setVisibility(View.VISIBLE);
+                gameFavorite.setImageResource(R.drawable.img_heart_black);
 
-            gameFavorite.setImageResource(R.drawable.img_heart_black);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -69,20 +73,22 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gameFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { //like or unlike a game
-                    if(isFavorite)//if liked add to the favorites array
+                    int i = getAdapterPosition();
+                    Toast.makeText(view.getContext(), ""+i, Toast.LENGTH_SHORT).show();
+
+                    if(isFavorite)//already liked, need to remove from liked.
                     {
                         isFavorite = false;
                         gameFavorite.setImageResource(R.drawable.img_heart_black);
-                        getAdapterPosition();
-                        //if (currentItem!=null)//TODO
-                        //MainActivity.listOfFavorites.remove(currentItem);//remove from favorites array
+                        //TODO DOESNT WORK
+                        //need to check if we are in the same list, list (thats shows all games) or we are in the favorites list, to know how to delete
                     }
-                    else //if not liked, remove from the array
+                    else //is not liked, need to add to like
                     {
                         isFavorite = true;
+                        listOfGameItems.get(i).setmIsFavorite(true);
                         gameFavorite.setImageResource(R.drawable.img_heart);
-                        //if (currentItem!=null) //TODO
-                        //MainActivity.listOfFavorites.add(currentItem);//add to the favorites array
+                        listOfFavorites.add(listOfGameItems.get(i));//add to the favorites array
                     }
                 }
             });
@@ -98,6 +104,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_game_in_list,viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
 
@@ -107,7 +114,17 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
 
         viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
-        //viewHolder.isFavorite = currentItem.getmIsFavorite();
+
+
+
+        if(currentItem.getmIsFavorite())
+        {
+            viewHolder.gameFavorite.setImageResource(R.drawable.img_heart);
+        }
+        else
+        {
+            viewHolder.gameFavorite.setImageResource(R.drawable.img_heart_black);
+        }
 
         String fixedPrice = addDotAndCurrencySign(currentItem.getmGamePrice());
             if(fixedPrice.equals("0.0₪"))

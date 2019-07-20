@@ -10,23 +10,29 @@
             android:orientation="vertical"
             android:scrollbars="vertical">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Favorite games"
+                android:textSize="25sp"
+                android:gravity="center" />
+
+            <ImageButton
+                android:id="@+id/favoriteGames"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="categoryClick"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_heart"
+                android:background="@null" />
+
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <ImageButton
-                        android:id="@+id/favoriteGames"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="categoryClick"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/img_heart" />
-                </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -39,7 +45,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_action" />
+                        android:src="@drawable/img_action"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/adventureGames"
@@ -48,7 +55,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_adventure" />
+                        android:src="@drawable/img_adventure"
+                        android:background="@null"/>
 
                 </TableRow>
 
@@ -63,7 +71,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_casual" />
+                        android:src="@drawable/img_casual"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/simulatorGames"
@@ -72,7 +81,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_sim" />
+                        android:src="@drawable/img_sim"
+                        android:background="@null"/>
                 </TableRow>
 
                 <TableRow
@@ -86,7 +96,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_strategy" />
+                        android:src="@drawable/img_strategy"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/buildingGames"
@@ -95,7 +106,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_sandbox" />
+                        android:src="@drawable/img_sandbox"
+                        android:background="@null"/>
                 </TableRow>
                 <TableRow
                     android:layout_width="match_parent"
@@ -108,7 +120,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_racing" />
+                        android:src="@drawable/img_racing"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/twoDimensionGames"
@@ -117,7 +130,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_2d" />
+                        android:src="@drawable/img_2d"
+                        android:background="@null"/>
                 </TableRow>
 
                 <TableRow
@@ -131,7 +145,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_free" />
+                        android:src="@drawable/img_free"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/fantasyGames"
@@ -140,7 +155,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_fantasy" />
+                        android:src="@drawable/img_fantasy"
+                        android:background="@null"/>
                 </TableRow>
 
                 <TableRow
@@ -154,7 +170,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_funny" />
+                        android:src="@drawable/img_funny"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/rpgGames"
@@ -163,7 +180,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_rpg" />
+                        android:src="@drawable/img_rpg"
+                        android:background="@null"/>
                 </TableRow>
 
                 <TableRow
@@ -177,7 +195,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_indie" />
+                        android:src="@drawable/img_indie"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/shooterGames"
@@ -186,7 +205,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_shooter" />
+                        android:src="@drawable/img_shooter"
+                        android:background="@null"/>
                 </TableRow>
 
                 <TableRow
@@ -200,7 +220,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_mmo" />
+                        android:src="@drawable/img_mmo"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/openWorldGames"
@@ -209,7 +230,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_open" />
+                        android:src="@drawable/img_open"
+                        android:background="@null"/>
                 </TableRow>
 
                 <TableRow
@@ -223,7 +245,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_puzzle" />
+                        android:src="@drawable/img_puzzle"
+                        android:background="@null"/>
 
                     <ImageButton
                         android:id="@+id/sportGames"
@@ -232,7 +255,8 @@
                         android:layout_weight="1"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_sport" />
+                        android:src="@drawable/img_sport"
+                        android:background="@null"/>
                 </TableRow>
 
             </TableLayout>
