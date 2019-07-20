@@ -2,6 +2,7 @@ package com.asafNilia.thedailygamer.Adapters;
 
 import android.content.ClipData;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.isInFavorite;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfGameItems;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.tags;
 
 public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.ViewHolder> {
     private ArrayList<GameItemSmall> mGameItemSmallList;
@@ -82,7 +84,15 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                         isFavorite = false;
                         gameFavorite.setImageResource(R.drawable.img_heart_black);
                         //need to check if we are in the same list, list (thats shows all games) or we are in the favorites list, to know how to delete
-                        listOfFavorites.remove(i);
+                        listOfFavorites.remove(listOfGameItems.get(i)); //was remove(i)
+
+                        //refresh the page if we are inside the favorites category
+                        if (tags.equals("1")) {
+                            Fragment newFragment = new newGames();
+                            ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_frame_layout, newFragment)
+                                    .commit();
+                        }
                     }
                     else //is not liked, need to add to like
                     {
