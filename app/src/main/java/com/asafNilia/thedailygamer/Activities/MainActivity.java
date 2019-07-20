@@ -2,6 +2,7 @@ package com.asafNilia.thedailygamer.Activities;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -28,7 +29,10 @@ import com.asafNilia.thedailygamer.Fragments.menu;
 import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.Fragments.searching;
 import com.asafNilia.thedailygamer.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements
@@ -357,6 +361,33 @@ public class MainActivity extends AppCompatActivity implements
     public void showKeyboard(){
         InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public void saveData()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(listOfFavorites);
+        editor.putString("favorite list",json);
+        editor.apply();
+    }
+
+    public void loadData()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("favorite list",null);
+        Type type = new TypeToken<ArrayList<GameItemSmall>>() {}.getType();
+        listOfFavorites = gson.fromJson(json,type);
+
+        if(listOfFavorites == null)
+        {
+            listOfFavorites = new ArrayList<>();
+        }
+
+
+
     }
 
 }
