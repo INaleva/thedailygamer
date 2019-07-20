@@ -85,9 +85,8 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                         gameFavorite.setImageResource(R.drawable.img_heart_black);
                         //need to check if we are in the same list, list (thats shows all games) or we are in the favorites list, to know how to delete
                         listOfFavorites.remove(listOfGameItems.get(i)); //was remove(i)
-
-                        //refresh the page if we are inside the favorites category
-                        if (tags.equals("1")) {
+                        
+                        if (tags.equals("1")) { //refresh the page if we are inside the favorites category
                             Fragment newFragment = new newGames();
                             ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.fragment_frame_layout, newFragment)
