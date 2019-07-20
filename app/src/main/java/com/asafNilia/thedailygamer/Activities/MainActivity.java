@@ -103,7 +103,11 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 currentPage = 1;
                 nextPage = 2;
+                url = "https://store.steampowered.com/search/";
+                if(!tags.equals(""))
                 url = url + "?tags=" +tags + "&page=" + currentPage + "term=" + term;
+                else
+                    url = url + "?page=" + currentPage + "term=" + term;
                 changeFragment(new newGames());
             }
         });
@@ -113,9 +117,10 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 currentPage++;
                 nextPage++;
+                url = "https://store.steampowered.com/search/";
                 if(term!=null) {
                     if(!tags.equals(""))
-                    url = url + "&tags=" + tags + "&page=" + currentPage; //case when we are in search
+                    url = url + "?tags=" + tags + "&page=" + currentPage; //case when we are in search
                     else
                         url = url + "?page=" + currentPage; //case when we are in search
 

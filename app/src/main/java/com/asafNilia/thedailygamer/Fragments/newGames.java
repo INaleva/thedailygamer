@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.currentPage;
+import static com.asafNilia.thedailygamer.Activities.MainActivity.lastPage;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfGameItems;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.tags;
@@ -186,6 +187,7 @@ public class newGames extends Fragment {
         {
             allPages.add(matcherForPages.group(1));
         }
+
         MainActivity.lastPage = Integer.parseInt(allPages.get(allPages.size()-1)); //gets last index
 
 
@@ -210,10 +212,9 @@ public class newGames extends Fragment {
         }
 
 
-
-        for(int i=0; i < allNames.size()-1; i++)
+        for(int i=0; i < allExpands.size()-1; i++) //was allnames
         {
-            if(allNames.get(i) != null && allImages.get(i) != null && allPrices.get(i) != null && allReleaseDates.get(i) != null)
+            if(allNames.get(i) != null && allImages.get(i) != null && allPrices.get(i) != null && allReleaseDates.get(i) != null && allExpands.get(i) != null)
             listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i),allExpands.get(i),false)); /** add items to main list */
         }
 
