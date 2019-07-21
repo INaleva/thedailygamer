@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements
     public static ImageButton buyNow;       //only visible when inside game item
     public static Button currentPageView;
     public static Button nextPageView;
-    public static Button lastPageView;
     public static Button firstPageView;
 
     public static int nextPage;
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements
     public static String storeUrl = ""; //link to the game in steam
     public static ArrayList<GameItemSmall> listOfFavorites;
     public static ArrayList<GameItemSmall> listOfGameItems;
-    public static FileOutputStream fos;
     public MainActivity() throws FileNotFoundException {
     }
 
@@ -106,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements
         buyNow = findViewById(R.id.buyNow);
         currentPageView = findViewById(R.id.curPage);
         nextPageView = findViewById(R.id.nextPage);
-        lastPageView = findViewById(R.id.lastPage);
         firstPageView = findViewById(R.id.firstPage);
         currentPage = 1;
         nextPage = 2;
@@ -114,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements
         if (currentPage==1)
             firstPageView.setVisibility(View.INVISIBLE);
 
+        /** sets back the to the first page */
         firstPageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,17 +142,7 @@ public class MainActivity extends AppCompatActivity implements
                 changeFragment(new newGames());
             }
         });
-        lastPageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!tags.equals(""))
-                url = url + "?tags=" +tags + "&page=" + lastPage + "term=" + term;
-                else
-                    url = url + "&page=" + lastPage + "term=" + term;
-                changeFragment(new newGames());
-
-            }
-        });
+        /** sets back the to the last page */
 
         //on click listener for key 'ENTER', as for now we only print the text that was written.
         textSearchField.setOnKeyListener(new View.OnKeyListener() {
@@ -182,41 +170,8 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        homeButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MainActivity.this, "Home screen, lets to see all the cool games!", Toast.LENGTH_SHORT).show();
-                ObjectAnimator.ofFloat(v, "rotation", 0, 360).start();
-
-                return true;
-            }
-        });
-
-        menuButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MainActivity.this, "Main menu, helps you to see only the games you like!", Toast.LENGTH_SHORT).show();
-                ObjectAnimator.ofFloat(v, "rotation", 0, 360).start();
-
-                return true;
-            }
-        });
-
-        searchButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MainActivity.this, "Search for that game you really liked!", Toast.LENGTH_SHORT).show();
-                ObjectAnimator.ofFloat(v, "rotation", 0, 360).start();
-
-                return true;
-            }
-        });
-
-
         changeFragment(new newGames());
     }
-
-
 
     @Override
     public void onItemFragmentInteraction(Uri uri) {
@@ -238,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    public void searchClicked(View view) { //minimize menu before search and return to normal after search
+    public void searchClicked(View view) { /**minimize menu before search and return to normal after search */
 
         if(searchTextIsVisible)
         {
@@ -259,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-    public void openMenu(View view) //open menu with game categories
+    public void openMenu(View view) /** open menu with game categories*/
     {
         cancelSearch();
         isInFavorite = false;
@@ -267,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements
         changeFragment(new menu());
     }
 
-    public void openHome(View view) //open home page with most popular games
+    public void openHome(View view) /**open home page with most popular games */
     {
         cancelSearch();
         buyNow.setVisibility(View.GONE);
@@ -285,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements
         cancelSearch();
     }
 
-    public static void cancelSearch() //removes the search bar
+    public static void cancelSearch() /** removes the search bar */
     {
         textSearchField.setVisibility(View.GONE);
         searchTextIsVisible = false;
@@ -300,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    public void buyNowClicked(View view) { //opens the buyNow fragment, it has a webview that opens steam game page
+    public void buyNowClicked(View view) { /** opens the buyNow fragment, it has a webview that opens steam game page */
 
         changeFragment(new buyNow());
 
@@ -311,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    public void categoryClick(View view) {
+    public void categoryClick(View view) { /** sets the url to the chosen category */
         String category = getResources().getResourceEntryName(view.getId());
 
         switch (category)

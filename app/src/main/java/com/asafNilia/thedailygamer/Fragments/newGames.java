@@ -97,7 +97,7 @@ public class newGames extends Fragment {
         }
 
 
-
+            /** connects to the given url and gets the HTML source code*/
             Ion.with(getContext()).load(MainActivity.url).asString().setCallback(new FutureCallback<String>() {
                 @Override
                 public void onCompleted(Exception e, String result) {
@@ -213,7 +213,7 @@ public class newGames extends Fragment {
         }
 
 
-        for(int i=0; i < allExpands.size()-1; i++) //was allnames
+        for(int i=0; i < allExpands.size()-1; i++)
         {
             if(allNames.get(i) != null && allImages.get(i) != null && allPrices.get(i) != null && allReleaseDates.get(i) != null && allExpands.get(i) != null)
             listOfGameItems.add(new GameItemSmall(allImages.get(i),allNames.get(i),allReleaseDates.get(i),allPrices.get(i),allExpands.get(i),false)); /** add items to main list */

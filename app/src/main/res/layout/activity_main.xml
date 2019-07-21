@@ -131,15 +131,6 @@
                 android:background="@drawable/square"
                 android:text="3" />
 
-            <Button
-                android:id="@+id/lastPage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/square"
-                android:text="4"
-                android:visibility="invisible"
-                tools:visibility="invisible" />
         </LinearLayout>
 
 

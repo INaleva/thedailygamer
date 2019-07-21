@@ -1,12 +1,9 @@
 package com.asafNilia.thedailygamer.Adapters;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,29 +14,17 @@ import android.widget.TextView;
 import com.asafNilia.thedailygamer.Activities.MainActivity;
 import com.asafNilia.thedailygamer.Classes.GameItemSmall;
 import com.asafNilia.thedailygamer.Fragments.gameItem;
-import com.asafNilia.thedailygamer.Fragments.menu;
-import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.R;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Locale;
-import java.util.regex.Pattern;
-
-import static com.asafNilia.thedailygamer.Activities.MainActivity.isInFavorite;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfFavorites;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.listOfGameItems;
 import static com.asafNilia.thedailygamer.Activities.MainActivity.tags;
 
 public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.ViewHolder> {
     private ArrayList<GameItemSmall> mGameItemSmallList;
-    private GameItemSmall currentItem;
 
     public class ViewHolder extends  RecyclerView.ViewHolder {
 
@@ -54,7 +39,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            //assign actual items to the fragment's pieces
+            /** assign actual items to the fragment's pieces */
             view = itemView;
             gameImage = itemView.findViewById(R.id.gamePhoto);
             gameName = itemView.findViewById(R.id.gameName);
@@ -62,7 +47,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             gamePrice = itemView.findViewById(R.id.gamePrice);
             gameFavorite = itemView.findViewById(R.id.gameFav);
 
-            if (MainActivity.currentPage == 1) //set the first page according to the current one
+            if (MainActivity.currentPage == 1) /** set the first page according to the current one */
                 MainActivity.firstPageView.setVisibility(View.INVISIBLE);
                 else
                 MainActivity.firstPageView.setVisibility(View.VISIBLE);
@@ -137,9 +122,9 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        currentItem = mGameItemSmallList.get(i);
+        GameItemSmall currentItem = mGameItemSmallList.get(i);
 
-        viewHolder.gameReleaseDate.setText("Release date:\n"+currentItem.getmGameReleaseDate());
+        viewHolder.gameReleaseDate.setText("Release date:\n"+ currentItem.getmGameReleaseDate());
         viewHolder.gameName.setText(currentItem.getmGameName());
 
         for(int j = 0; j < listOfFavorites.size(); j++)
@@ -173,7 +158,6 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
         viewHolder.gamePage = currentItem.getmGamePage();
         Picasso.get().load(currentItem.getImageResource()).into(viewHolder.gameImage);
         MainActivity.pagesLayout.setVisibility(View.VISIBLE);
-        MainActivity.lastPageView.setText(""+MainActivity.lastPage);
         MainActivity.currentPageView.setText(""+MainActivity.currentPage);
         MainActivity.nextPageView.setText(""+MainActivity.nextPage);
     }
@@ -183,7 +167,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
             int number = Integer.parseInt(fullPrice);
             int first = number / 100;
             int last = number % 100;
-            String fixedPrice = Integer.toString(first) + "." + Integer.toString(last) + "₪";
+            String fixedPrice = first + "." + last + "₪";
             return fixedPrice;
         }
         catch (NumberFormatException e)
