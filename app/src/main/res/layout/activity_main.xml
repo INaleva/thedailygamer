@@ -82,6 +82,8 @@
             android:onClick="buyNowClicked"
             android:scaleType="centerInside"
             android:visibility="gone"
+            android:padding="10dp"
+            android:background="@null"
             app:srcCompat="@drawable/buynow" />
 
         <LinearLayout
