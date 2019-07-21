@@ -1,6 +1,8 @@
 package com.asafNilia.thedailygamer.Adapters;
 
 import android.content.ClipData;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,8 +20,13 @@ import com.asafNilia.thedailygamer.Fragments.gameItem;
 import com.asafNilia.thedailygamer.Fragments.menu;
 import com.asafNilia.thedailygamer.Fragments.newGames;
 import com.asafNilia.thedailygamer.R;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
@@ -92,6 +99,7 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                             notifyItemRangeChanged(getAdapterPosition(), listOfGameItems.size());
                             notifyDataSetChanged();
                         }
+
                     }
                     else //is not liked, need to add to like
                     {
@@ -100,6 +108,14 @@ public class smallItemAdapter extends RecyclerView.Adapter<smallItemAdapter.View
                         gameFavorite.setImageResource(R.drawable.img_heart);
                         listOfFavorites.add(listOfGameItems.get(i));//add to the favorites array
                     }
+
+                    //save current favorites array to file
+                    SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(listOfFavorites);
+                    editor.putString("favorites",json);
+                    editor.apply();
                 }
             });
         }
