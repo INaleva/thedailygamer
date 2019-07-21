@@ -12,5 +12,6 @@
         android:background="@android:color/darker_gray"
         android:padding="4dp"
         android:scrollbars="vertical"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        />
 </FrameLayout>

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 
     <com.asafNilia.thedailygamer.Classes.CustomEditText
         android:id="@+id/textSearch"
@@ -31,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="8"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/background">
 
         <ImageView
             android:id="@+id/homeButton"
@@ -39,7 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:adjustViewBounds="true"
+            android:background="@null"
             android:onClick="openHome"
+            android:padding="10dp"
+            android:paddingStart="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/home" />
 
@@ -51,17 +55,21 @@
             android:adjustViewBounds="true"
             android:background="@null"
             android:onClick="openMenu"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/menu"
             tools:src="@drawable/menu" />
 
         <ImageButton
             android:id="@+id/buttonSearchGame"
+            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:adjustViewBounds="true"
+            android:background="@null"
             android:onClick="searchClicked"
+            android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/gamesearch" />
 

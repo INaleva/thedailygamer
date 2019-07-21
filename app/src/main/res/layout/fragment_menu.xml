@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,231 +33,258 @@
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="20dp">
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
 
                     <ImageButton
                         android:id="@+id/actionGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="15dp"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_action"
-                        android:background="@null"/>
+                        android:src="@drawable/img_action" />
 
                     <ImageButton
                         android:id="@+id/adventureGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="15dp"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_adventure"
-                        android:background="@null"/>
+                        android:src="@drawable/img_adventure" />
 
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/casualGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_casual"
-                        android:background="@null"/>
+                        android:src="@drawable/img_casual" />
 
                     <ImageButton
                         android:id="@+id/simulatorGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_sim"
-                        android:background="@null"/>
+                        android:src="@drawable/img_sim" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/strategyGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_strategy"
-                        android:background="@null"/>
+                        android:src="@drawable/img_strategy" />
 
                     <ImageButton
                         android:id="@+id/buildingGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_sandbox"
-                        android:background="@null"/>
+                        android:src="@drawable/img_sandbox" />
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/racingGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_racing"
-                        android:background="@null"/>
+                        android:src="@drawable/img_racing" />
 
                     <ImageButton
                         android:id="@+id/twoDimensionGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_2d"
-                        android:background="@null"/>
+                        android:src="@drawable/img_2d" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/freeToPlayGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_free"
-                        android:background="@null"/>
+                        android:src="@drawable/img_free" />
 
                     <ImageButton
                         android:id="@+id/fantasyGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_fantasy"
-                        android:background="@null"/>
+                        android:src="@drawable/img_fantasy" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/funnyGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_funny"
-                        android:background="@null"/>
+                        android:src="@drawable/img_funny" />
 
                     <ImageButton
                         android:id="@+id/rpgGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_rpg"
-                        android:background="@null"/>
+                        android:src="@drawable/img_rpg" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/indieGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_indie"
-                        android:background="@null"/>
+                        android:src="@drawable/img_indie" />
 
                     <ImageButton
                         android:id="@+id/shooterGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_shooter"
-                        android:background="@null"/>
+                        android:src="@drawable/img_shooter" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/mmorpgGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_mmo"
-                        android:background="@null"/>
+                        android:src="@drawable/img_mmo" />
 
                     <ImageButton
                         android:id="@+id/openWorldGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_open"
-                        android:background="@null"/>
+                        android:src="@drawable/img_open" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="25dp">
 
                     <ImageButton
                         android:id="@+id/puzzleGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:background="@null"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_puzzle"
-                        android:background="@null"/>
+                        android:src="@drawable/img_puzzle" />
 
                     <ImageButton
                         android:id="@+id/sportGames"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@null"
+                        android:layout_margin="15dp"
                         android:onClick="categoryClick"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_sport"
-                        android:background="@null"/>
+                        android:src="@drawable/img_sport" />
                 </TableRow>
 
             </TableLayout>
